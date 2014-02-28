@@ -13,6 +13,47 @@
  * Post-condition: appended to c1[] is a single space and then
  *                 c2[] is appended 
  */
+
+
+
+
+
+
+//used for improvement number 2
+
+
+
+void splitFile(char file[])
+{
+
+
+	//This function will take a large file that we need to parse and split it up into many smaller files
+
+	//how to do this is interesting...
+
+}
+
+void combineFiles(char files[])
+{
+	
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void appendWithSpace(char c1[], char c2[])
 {
 strcat(c1," ");
