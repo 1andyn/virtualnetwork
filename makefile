@@ -3,6 +3,12 @@
 net367: host.o utilities.o link.o man.o main.o net.o
 	gcc -o net367 host.o utilities.o link.o man.o main.o net.o
 
+fwtable: fwtable.o
+	gcc -o fwtable fwtable.o
+
+fwtable.o: fwtable.c
+	gcc -c fwtable.c
+
 main.o: main.c
 	gcc -c main.c
 
