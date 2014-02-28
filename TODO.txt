@@ -1,0 +1,23 @@
+TODO:
+grep example:
+
+grep -r "ItemYouAreSearcingfor"
+
+questions
+
+
+
+
+
+Improvement #1
+
+
+
+
+Improvement #2
+packetBuffer is found in main.h <--- change this to mark for end of file or not
+
+
+Improvement #3
+
+
