@@ -295,12 +295,19 @@ packetbuff->new = 0;
  */
 void hostUploadPacket(hostState * hstate, char fname[], char replymsg[]) 
 {
+
+
+
+
 char c;
 FILE * fp;
 char path[MAXBUFFER];  /* Path to the file */
 char tempbuff[MAXBUFFER]; /* A temporary buffer */
 int length;
 int i;
+
+
+
 
 /* 
  * Upload the file into tempbuff 
