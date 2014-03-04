@@ -39,9 +39,8 @@
 #define PIPEWRITE 1 
 #define PIPEREAD  0
 
+void switchInitState(switchState * sstate, int physid); 
+void switchRecvPacketBuff(packetBuffer * pbuff);
+void switchSendPacketBuff(packetBuffer * pbuff);
 
-int main()
-{
-
-}
 
