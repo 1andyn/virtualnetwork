@@ -9,6 +9,7 @@ typedef struct { /* Packet buffer */
    char payload[PAYLOAD_LENGTH + 1];  /* Payload section */
    int valid;   /* Indicates if the contents is valid */ 
    int new;     /* Indicates if the contents has been downloaded */
+   int sendrcv;
 } packetBuffer;
 
 

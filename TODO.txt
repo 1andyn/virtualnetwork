@@ -3,14 +3,14 @@ grep example:
 
 grep -r "ItemYouAreSearcingfor"
 
-questions
-
-
-
+Questions
+-What is the valid bit for in the forwarding table? 
 
 
 Improvement #1
-
+-Currently implementing FWTable container
+-PacketQueue Container
+-Switch Implementation
 
 
 

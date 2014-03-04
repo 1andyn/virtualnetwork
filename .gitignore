@@ -1,0 +1,23 @@
+# Object Files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Libraries
+*.lib
+*.a
+
+# Shared Obj
+*.dll
+*.so
+*.so*
+
+# Executables
+*.exe
+*.out
+*.app
+*.hdex
+
+# Swap file
+*.swp
