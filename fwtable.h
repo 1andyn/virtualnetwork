@@ -10,6 +10,6 @@ typedef struct FWTable {
 } FWTable;
 
 FWTable * createTable();
-void fwTableAdd(FWTable ** head, FWTable * new);
-void fwTableUpdate(FWTable ** head, int des_addr, int new_link);
-FWTable ** fwTablesearch(FWTable ** head, int source_addr); 
+void fwTableAdd(FWTable ** head, FWTable * newentry);
+void fwTableUpdate(FWTable ** head, int des_addr, int new_link, int val);
+FWTable ** fwTableSearch(FWTable ** head, int dest);

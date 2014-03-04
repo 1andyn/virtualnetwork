@@ -21,4 +21,8 @@ utilities.o: utilities.c
 link.o:  link.c
 	gcc -c link.c
 
+switch.o: switch.c
+	gcc -c switch.c
 
+clean:
+	rm -rf *o net367 fwtable
