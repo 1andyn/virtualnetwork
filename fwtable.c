@@ -64,6 +64,7 @@ void fwTableIterate(FWTable ** head)
       *iterate = (*iterate)->next;
    }
 }
+
 int main()
 {
    FWTable * head = createTable(0, 0, 0);
