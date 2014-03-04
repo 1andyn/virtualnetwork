@@ -2,9 +2,13 @@
 #include <stdlib.h>
 #include "fwtable.h"
 
-FWTable * createTable()
+
+// Creates a Table Entry for FWTable
+FWTable * createTable(int dest, int link, int valid)
 {
-   return (FWTable *)malloc(sizeof(FWTable));
+   FWTable * entry;
+   entry = (FWTable *) malloc(sizeof(FWTable));
+     
 }
 
 void fwTableAdd(FWTable * head, FWTable * newdata)
