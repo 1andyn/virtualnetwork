@@ -56,6 +56,15 @@ void TestIterate(const PacketQueue * pq)
    }
 }
 
+int IsEmpty(const PacketQueue *pq)
+{
+   if(pq->head == NULL) {
+      return 1;
+   } else {
+      return 0;
+   }
+}
+
 int main()
 {
    /* Test Packet Buffer */
@@ -90,13 +99,35 @@ int main()
    
    PacketQueue * queue = NULL;
    queue = createQueue();
+   
+   if(IsEmpty(queue)){
+      printf("Queue is currently empty. \n");
+   }
+
+   printf("\n\nAttempting to break front()\n");
+   
+   packetBuffer * mypacket = front(queue);
+   if(mypacket == NULL) {
+      printf("Found null \n");
+   } else {
+      printf("Front payload: %s \n", mypacket->payload); 
+   }
+   printf("\n\n");
+   
    enQueue(queue, temp);
    enQueue(queue, temp2);
    enQueue(queue, temp3);
-  
+ 
+   printf("Enqueued some packets...\n"); 
+   if(!IsEmpty(queue)){
+      printf("Queue is NOT currently empty. \n");
+   }
+
    printf("First Iteration: \n"); 
    TestIterate(queue);
-    
+   
+   mypacket = front(queue);
+   printf("Front payload: %s \n", mypacket->payload); 
 
 }
 
