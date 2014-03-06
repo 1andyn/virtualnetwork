@@ -74,7 +74,7 @@ void deQueue(PacketQueue * pq)
    }
 }
 
-
+//This is just driver code for testing purposes
 int main()
 {
    /* Test Packet Buffer */

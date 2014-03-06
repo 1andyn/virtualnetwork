@@ -67,6 +67,7 @@ void fwTableIterate(FWTable ** head)
    }
 }
 
+//This is just driver code for testing purposes
 int main()
 {
    FWTable * head = createTable(0, 0, 0);

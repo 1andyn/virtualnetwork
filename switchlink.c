@@ -29,3 +29,6 @@ void addLink(switchLinks ** head, switchLinks * newlink)
       }
    }
 }
+
+//This is just drive code for testing purposes
+int main()
