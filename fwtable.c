@@ -51,8 +51,10 @@ void fwTableUpdate(FWTable ** head, int des_addr, int new_link, int val)
 {
    FWTable ** des_index;
    des_index = fwTableSearch(head, des_addr);
-   (*des_index)->out_link = new_link;
-   (*des_index)->valid = val;
+   if(des_index != NULL){ 
+      (*des_index)->out_link = new_link;
+      (*des_index)->valid = val;
+   }
 }
 
 void fwTableIterate(FWTable ** head)
@@ -71,12 +73,14 @@ int main()
    FWTable * other = createTable(1,1,0);
    FWTable * newt = createTable(2,2,0);
    FWTable * test = createTable(3,3,0);
+   
 
    fwTableAdd(&head, other);
    fwTableAdd(&head, newt);
    fwTableAdd(&head, test);
-   
+  
    fwTableUpdate(&head, 2, 7, 1);
+   fwTableUpdate(&head, 4, 2, 1);
 
    fwTableIterate(&head);
 }

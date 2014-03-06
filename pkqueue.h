@@ -7,9 +7,24 @@ typedef struct PKQueue {
    struct PKQueue * next;
 } PKQueue;
 
-PKQueue * init_queue();
-PKQueue * create_entry(packetBuffer recv);//Instantiate a PKQueue entry
-PKQueue ** pop_queue(PKQueue ** head); // Removes head, and returns new head
-void push_queue(PKQueue ** head, PKQueue new_entry); //Adds packet to back
+typdef struct PacketQueue{
+   struct PKQueue * head;
+   struct PKQueue * tail;
+} PacketQueue;
+
+
+PacketQueue * createQueue();
+PacketQueue * freeQueue(PacketQueue * pq); //Deallocates Queue
+PacketQueue * enQueue(PacketQueue * pq, packetBuffer rcv);//Adds to Queue
+packetBuffer * deQueue(PacketQueue * pq);
+
+//Support Functions
+packetBuffer * front(PacketQueue *pq);
+bool isEmpty(const PacketQueue * pq);
+
+//Debug purpose only
+void TestIterate (const PacketQueue * pq);
+
+
 
 
