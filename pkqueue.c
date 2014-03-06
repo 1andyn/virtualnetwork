@@ -65,6 +65,16 @@ int IsEmpty(const PacketQueue *pq)
    }
 }
 
+void deQueue(PacketQueue * pq)
+{
+   if(!IsEmpty(pq)){
+      PKQueue * temp = pq->head;
+      pq->head = (pq->head)->next;
+      free(temp); //Deallocate
+   }
+}
+
+
 int main()
 {
    /* Test Packet Buffer */
@@ -129,6 +139,26 @@ int main()
    mypacket = front(queue);
    printf("Front payload: %s \n", mypacket->payload); 
 
+   printf("--------------\n");
+
+   deQueue(queue);
+   printf("Popped top, new iteration: \n");
+   TestIterate(queue);
+
+   mypacket = front(queue);
+   printf("Front payload: %s \n", mypacket->payload); 
+   
+   printf("--------------\n");
+   
+   deQueue(queue);
+   printf("Popped top, new iteration: \n");
+   TestIterate(queue);
+   
+   
+   if(IsEmpty(queue)){
+      printf("Queue is currently empty. \n");
+   }
+   
 }
 
 
