@@ -30,5 +30,8 @@ link.o:  link.c
 switch.o: switch.c
 	gcc -c switch.c
 
+pkqueue.o: pkqueue.c
+	gcc -c pkqueue.c
+
 clean:
 	rm -rf *o net367 fwtable

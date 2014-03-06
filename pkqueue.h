@@ -15,7 +15,7 @@ typdef struct PacketQueue{
 
 PacketQueue * createQueue();
 PacketQueue * freeQueue(PacketQueue * pq); //Deallocates Queue
-PacketQueue * enQueue(PacketQueue * pq, packetBuffer rcv);//Adds to Queue
+void enQueue(PacketQueue * pq, packetBuffer rcv);//Adds to Queue
 packetBuffer * deQueue(PacketQueue * pq);
 
 //Support Functions

@@ -37,8 +37,11 @@ void enQueue(PacketQueue * pq, packetBuffer rcv)
 
 packetBuffer * front(const PacketQueue * pq)
 {
-   if(
-   return &(pq->head.rcvPKB);
+   if(pq != NULL){
+      return &(pq->head.rcvPKB);
+   } else {
+      return NULL;
+   }
 }
 
 int main()
