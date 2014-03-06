@@ -34,4 +34,4 @@ pkqueue.o: pkqueue.c
 	gcc -c pkqueue.c
 
 clean:
-	rm -rf *o net367 fwtable
+	rm -rf *o net367 fwtable pkqueue

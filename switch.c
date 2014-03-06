@@ -32,6 +32,8 @@
 #include "link.h"
 #include "man.h"
 #include "host.h"
+#include "fwtable.h"
+#include "pkqueue.h"
 
 #define EMPTY_ADDR  0xffff  /* Indicates that the empty address */
                              /* It also indicates that the broadcast address */
