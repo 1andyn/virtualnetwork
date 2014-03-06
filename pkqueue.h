@@ -14,8 +14,6 @@ typedef struct PacketQueue{
 
 
 PacketQueue * createQueue();
-//Will likely never need to dump entire queue
-//PacketQueue * freeQueue(PacketQueue * pq); //Deallocates Queue
 void enQueue(PacketQueue * pq, packetBuffer rcv);//Adds to Queue
 void deQueue(PacketQueue * pq);
 
