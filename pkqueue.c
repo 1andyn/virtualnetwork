@@ -154,10 +154,29 @@ int main()
    printf("Popped top, new iteration: \n");
    TestIterate(queue);
    
+   printf("--------------\n");
+   
+   deQueue(queue);
+   printf("Popped top, new iteration: \n");
+   TestIterate(queue);
    
    if(IsEmpty(queue)){
       printf("Queue is currently empty. \n");
    }
+  
+  
+   enQueue(queue, temp);
+   enQueue(queue, temp2);
+   enQueue(queue, temp3);
+ 
+   printf("Enqueued some packets...\n"); 
+   if(!IsEmpty(queue)){
+      printf("Queue is NOT currently empty. \n");
+   }
+
+   printf("Final Iteration: \n"); 
+   TestIterate(queue);
+  
    
 }
 
