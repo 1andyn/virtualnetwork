@@ -9,13 +9,9 @@
 
 typedef struct {
    int physid; /* Physical ID */
-   struct FWTable;
-   struct PackQueue;
-   
-   //Does this need to be an container (multiple links in and out?)
-   LinkInfo linkin; //Incoming communication link
-   LinkInfo linkout; //Outgoing communication link
+   struct FWTable; //Container of forwarding data
+   struct PacketQueue; //Container of packets
+   struct switchLinks; //Container of all connections   
 } switchState;
 
-//does a switch need an id?
 void switchMain(switchState * sstate);
