@@ -3,7 +3,7 @@
 #include "links.h"
 #include "switchlink.h"
 
-void constructLinks(LinkInfo in, Linkinfo out, int id)
+switchLink * constructLinks(LinkInfo in, Linkinfo out, int id)
 {
    switchLinks * head;
    head = (switchLinks *) malloac(sizeof(switchLinks));
@@ -30,5 +30,42 @@ void addLink(switchLinks ** head, switchLinks * newlink)
    }
 }
 
+switchLink ** linkSearch(switchLinks ** head, int ID)
+{
+   /*Recursive Search*/
+   switchLink * index;
+   if(*head == NULL){
+      return NULL;
+   } else {
+      index = *head;
+      if(index->hostID = ID){
+         return head;
+      } else {
+         return linkSearch(&(index->next), ID);
+      }
+   }
+}
+
+void TestIterate(const switchLinks ** head)
+{
+   switchLinks ** ptr = head;
+   while(*ptr != NULL) {
+      printf("",);
+      *ptr = (*ptr)->next;
+   }
+}
+
 //This is just drive code for testing purposes
 int main()
+{
+   LinkInfo l_i;
+   LinkInfo l_o;
+   
+   l_i.linkType = UNIPIPE;
+   l_i.linkID = 0;
+   link.uniPipeInfo.PipeType = NONBLOCKING;
+   linkCreate(&l_i);
+   
+
+
+}
