@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "main.h" //PacketBuffer
+#include "pkqueue.h"
+#include <string.h>
 
 PacketQueue * createQueue()
 {
    PacketQueue * queue;
-   queue = (Queue *) malloc(sizeof(PacketQueue));
+   queue = (PacketQueue *) malloc(sizeof(PacketQueue));
    if(queue == NULL){
       printf("Error: PacketQueue Allocation failed.\n");
       exit(1);
@@ -19,6 +21,7 @@ void enQueue(PacketQueue * pq, packetBuffer rcv)
 {
    PKQueue * pkq = (PKQueue *) malloc(sizeof(PKQueue));
    if(pkq == NULL){
+      free(pkq);
       printf("Error: Could not allocate memory for PacketBuffer\n");
    } else {
       //Assign element Data
@@ -29,8 +32,8 @@ void enQueue(PacketQueue * pq, packetBuffer rcv)
       if(pq->head == NULL) {
          pq->head = pq->tail = pkq;
       } else { //Else
-         pk->tail->next = pkq;
-         pk->tail = pkq; //Update Tail 
+         pq->tail->next = pkq;
+         pq->tail = pkq; //Update Tail 
       }
    }
 }
@@ -38,9 +41,18 @@ void enQueue(PacketQueue * pq, packetBuffer rcv)
 packetBuffer * front(const PacketQueue * pq)
 {
    if(pq != NULL){
-      return &(pq->head.rcvPKB);
+      return &(pq->head->rcvPKB);
    } else {
       return NULL;
+   }
+}
+
+void TestIterate(const PacketQueue * pq)
+{
+   PKQueue * ptrptr = pq->head;
+   while(ptrptr != NULL){
+      printf("Payload, '%s' \n", ptrptr->rcvPKB.payload);
+      ptrptr = ptrptr->next;
    }
 }
 
@@ -53,15 +65,38 @@ int main()
    temp.srcaddr = 1;
    temp.dstaddr = 6;
    temp.length = 5;
-   temp.payload = 'hello';
-   temp.sendsrv = 9;
-   /* Test Packet Buffer*/
+   strcpy(temp.payload, "hello");
+   temp.sendrcv = 9;
+   
+   /* Test Packet Buffer 2*/
+   packetBuffer temp2;
+   temp2.valid = 2;
+   temp2.new = 3;
+   temp2.srcaddr = 1;
+   temp2.dstaddr = 6;
+   temp2.length = 5;
+   strcpy(temp2.payload, "good day");
+   temp2.sendrcv = 9;
+   
+   /* Test Packet Buffer 3*/
+   packetBuffer temp3;
+   temp3.valid = 2;
+   temp3.new = 3;
+   temp3.srcaddr = 1;
+   temp3.dstaddr = 6;
+   temp3.length = 5;
+   strcpy(temp3.payload, "greetings");
+   temp3.sendrcv = 9;
    
    PacketQueue * queue = NULL;
    queue = createQueue();
    enQueue(queue, temp);
-   
-   TestIterate(queue); 
+   enQueue(queue, temp2);
+   enQueue(queue, temp3);
+  
+   printf("First Iteration: \n"); 
+   TestIterate(queue);
+    
 
 }
 

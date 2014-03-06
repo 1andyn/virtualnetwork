@@ -7,7 +7,7 @@ typedef struct PKQueue {
    struct PKQueue * next;
 } PKQueue;
 
-typdef struct PacketQueue{
+typedef struct PacketQueue{
    struct PKQueue * head;
    struct PKQueue * tail;
 } PacketQueue;
@@ -19,8 +19,8 @@ void enQueue(PacketQueue * pq, packetBuffer rcv);//Adds to Queue
 packetBuffer * deQueue(PacketQueue * pq);
 
 //Support Functions
-packetBuffer * front(PacketQueue *pq);
-bool isEmpty(const PacketQueue * pq);
+packetBuffer * front(const PacketQueue *pq);
+int isEmpty(const PacketQueue * pq);
 
 //Debug purpose only
 void TestIterate (const PacketQueue * pq);
