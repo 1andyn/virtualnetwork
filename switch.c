@@ -41,16 +41,71 @@
 #define PIPEWRITE 1 
 #define PIPEREAD  0
 
+void switchInitTable(switchState * sstate)
+{
+
+}
+
 void switchInitState(switchState * sstate, int physid)
 {
    //only initializes id, links have to be added through a loop
-   //fwtable needs to be intialized as data is transmitted
    sstate->physid = physid;
+   switchInitTable(sstate);
 }
-void switchRecvPacketBuff(packetBuffer * pbuff);
-void switchSendPacketBuff(packetBuffer * pbuff);
+void switchRecvPacketBuff(switchState * s_state, packetBuffer * pbuff)
+{
+   //Adds packetbuffer to Queue
+   enQueue((s_state->recvPQ), &pbuff);
+}
+void switchSendPacketBuff(switchState * s_state)
+{
+   if(!isEmpty(s_state->recvPQ)){
+      //Send data from top of queue
+      //Packet from top of queue
+      int destaddr; //Destination address
+      packetBuffer * temp = front(s_state->recvPQ);
+      destaddr = temp.dstaddr;
 
-void 
+      //Forwarding Table Entry not found
+      FWTable ** ft = fwTableSearch(&(s_state->ftable), destaddr);
+      if(ft == NULL) {
+         switchSendAll(s_state);
+      } else {
+      
+      
+      }
+
+   
+   }
+}
+
+
+void switchSendAll(switchState * s_state)
+{
+
+}
+
+void switchTransmitPacket(switchState * s_state)
+{
+   char dest[1000];
+   int dstaddr;
+   findWord(dest, word, 2);
+   dstraddr = ascii2Int(dest);
+   
+   s_state->recvPQ
+   
+   s_state->sendBuffer.dstaddr = dstaddr;
+
+   s_state->sendBuffer.srcaddr =  
+
+}
+
+void switchSetLinkHead(switchState * s_state, switchLinks * head)
+{
+   sLinks = head;
+}
+
+
 
 void switchMain(switchState * s_state)
 {
@@ -64,9 +119,8 @@ void switchMain(switchState * s_state)
 
    
    while(1){
-      int data_size;
-      data_size =
-     
+      LinkInfo *linkptr = 
+      linkReceive(&(s_state 
      //does the switch sleep? 
       usleep(TENMILLISEC);  
    }
