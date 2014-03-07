@@ -40,17 +40,33 @@
 #define MAXBUFFER 1000
 #define PIPEWRITE 1 
 #define PIPEREAD  0
+#define MAX_LINKS 20 /* Arbitrary value for Link Max */
+#define FIRST_ADDR 0
+#define INVALID 0
+#define VALID 1
+#define LINK_OFFSET 1
 
-void switchInitTable(switchState * sstate)
+void switchInitTable(switchState * sstate, int linkcnt)
 {
+  int links[MAX_LINKS];
+  int x;
+  
+  for(x = 0; x < linkcnt; x++) {
+     links[x] = x;
+  }
 
+  FWTable * head = createTable(FIRST_ADDR, links, INVALID); 
+  sstate->ftable = head;
+  for(x = 1; x < linkcnt - LINK_OFFSET; x++){
+      fwTableAdd(&head, links, INVALID); 
+  }
 }
 
-void switchInitState(switchState * sstate, int physid)
+void switchInitState(switchState * sstate, int physid, int linkcnt)
 {
    //only initializes id, links have to be added through a loop
    sstate->physid = physid;
-   switchInitTable(sstate);
+   switchInitTable(sstate, linkcnt);
 }
 void switchRecvPacketBuff(switchState * s_state, packetBuffer * pbuff)
 {
@@ -70,8 +86,9 @@ void switchSendPacketBuff(switchState * s_state)
       FWTable ** ft = fwTableSearch(&(s_state->ftable), destaddr);
       if(ft == NULL) {
          switchSendAll(s_state);
+
       } else {
-      
+             
       
       }
 

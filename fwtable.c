@@ -3,7 +3,7 @@
 #include "fwtable.h"
 
 // Creates a Table Entry for FWTable
-FWTable * createTable(int dest, int * link, int val)
+FWTable * createTable(int dest, int link, int val)
 {
    FWTable * entry;
    entry = (FWTable *) malloc(sizeof(FWTable));
@@ -46,7 +46,7 @@ FWTable ** fwTableSearch(FWTable ** head, int dest)
    }
 }
 
-void fwTableUpdate(FWTable ** head, int des_addr, int * new_link, int val)
+void fwTableUpdate(FWTable ** head, int des_addr, int new_link, int val)
 {
    FWTable ** des_index;
    des_index = fwTableSearch(head, des_addr);
@@ -69,20 +69,18 @@ void fwTableIterate(FWTable ** head)
 //This is just driver code for testing purposes
 int main()
 {
-   int x[20] = {1,2,3};
-   FWTable * head = createTable(0, x, 0);
-   FWTable * other = createTable(1,x,0);
-   FWTable * newt = createTable(2,x,0);
-   FWTable * test = createTable(3,x,0);
+   FWTable * head = createTable(0, 4, 0);
+   FWTable * other = createTable(1,7,0);
+   FWTable * newt = createTable(2,6,0);
+   FWTable * test = createTable(3,1,0);
    
 
    fwTableAdd(&head, other);
    fwTableAdd(&head, newt);
    fwTableAdd(&head, test);
   
-   int y[20] = {7,2,1};
-   fwTableUpdate(&head, 2, y, 1);
-   fwTableUpdate(&head, 4, y, 1);
+   fwTableUpdate(&head, 2, 4, 1);
+   fwTableUpdate(&head, 4, 2, 1);
 
    fwTableIterate(&head);
 }
