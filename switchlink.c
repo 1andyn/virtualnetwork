@@ -1,15 +1,17 @@
-#include <sdio.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include "links.h"
+#include <string.h>
+#include "main.h"
+#include "link.h"
 #include "switchlink.h"
 
-switchLink * constructLinks(LinkInfo in, Linkinfo out, int id)
+switchLinks * constructLink(LinkInfo in, LinkInfo out, int id)
 {
    switchLinks * head;
-   head = (switchLinks *) malloac(sizeof(switchLinks));
+   head = (switchLinks *) malloc(sizeof(switchLinks));
    head->linkin = in;
    head->linkout = out;
-   head->hostID = id;
+   head->hostid = id;
    return head;
 }
 
@@ -25,32 +27,33 @@ void addLink(switchLinks ** head, switchLinks * newlink)
       if(indexptr == NULL) {
          *head = newlink;
       } else {
-         addLink(&(head->next), newlink);
+         addLink(&(indexptr->next), newlink);
       }
    }
 }
 
-switchLink ** linkSearch(switchLinks ** head, int ID)
+switchLinks ** linkSearch(switchLinks ** head, int id)
 {
    /*Recursive Search*/
-   switchLink * index;
+   switchLinks * index;
    if(*head == NULL){
       return NULL;
    } else {
       index = *head;
-      if(index->hostID = ID){
+      if(index->hostid = id){
          return head;
       } else {
-         return linkSearch(&(index->next), ID);
+         return linkSearch(&(index->next), id);
       }
    }
 }
 
-void TestIterate(const switchLinks ** head)
+void TestIterate(switchLinks ** head)
 {
    switchLinks ** ptr = head;
    while(*ptr != NULL) {
-      printf("",);
+      printf("LinkID: %d, LinkID2: %d \n", (*ptr)->linkout.linkID, 
+      (*ptr)->linkin.linkID);
       *ptr = (*ptr)->next;
    }
 }
@@ -63,9 +66,6 @@ int main()
    
    l_i.linkType = UNIPIPE;
    l_i.linkID = 0;
-   link.uniPipeInfo.PipeType = NONBLOCKING;
-   linkCreate(&l_i);
-   
-
+   l_i.uniPipeInfo.pipeType = NONBLOCKING;
 
 }
