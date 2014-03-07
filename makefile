@@ -3,9 +3,6 @@
 net367: host.o utilities.o link.o man.o main.o net.o
 	gcc -o net367 host.o utilities.o link.o man.o main.o net.o
 
-fwtable: fwtable.o
-	gcc -o fwtable fwtable.o
-
 fwtable.o: fwtable.c
 	gcc -c fwtable.c
 
@@ -33,5 +30,8 @@ switch.o: switch.c
 pkqueue.o: pkqueue.c
 	gcc -c pkqueue.c
 
+switchlink.o: switchlink.c
+	gcc -c switchlink.c
+
 clean:
-	rm -rf *o net367 fwtable pkqueue
+	rm -rf *o net367 pkqueue switch switchlink fwtable

@@ -9,9 +9,10 @@
 
 typedef struct {
    int physid; /* Physical ID */
-   struct FWTable; //Container of forwarding data
-   struct PacketQueue; //Container of packets
-   struct switchLinks; //Container of all connections   
+   packetBuffer sendBuffer;
+   struct FWTable ftable; //Container of forwarding data
+   struct PacketQueue recvPQ; //Container of packets
+   struct switchLinks sLinks; //Container of all connections   
 } switchState;
 
 void switchMain(switchState * sstate);

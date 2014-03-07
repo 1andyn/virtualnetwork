@@ -41,8 +41,33 @@
 #define PIPEWRITE 1 
 #define PIPEREAD  0
 
-void switchInitState(switchState * sstate, int physid); 
+void switchInitState(switchState * sstate, int physid)
+{
+   //only initializes id, links have to be added through a loop
+   //fwtable needs to be intialized as data is transmitted
+   sstate->physid = physid;
+}
 void switchRecvPacketBuff(packetBuffer * pbuff);
 void switchSendPacketBuff(packetBuffer * pbuff);
 
+void 
 
+void switchMain(switchState * s_state)
+{
+   char buffer[1000];
+   char word[1000];
+   
+   //Data Structures for switch
+   FWTable * table;
+   PacketQueue *
+   switchLinks *
+
+   
+   while(1){
+      int data_size;
+      data_size =
+     
+     //does the switch sleep? 
+      usleep(TENMILLISEC);  
+   }
+}
