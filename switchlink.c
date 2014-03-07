@@ -64,8 +64,28 @@ int main()
    LinkInfo l_i;
    LinkInfo l_o;
    
+   LinkInfo l_i2;
+   LinkInfo l_o2;
+   
    l_i.linkType = UNIPIPE;
    l_i.linkID = 0;
    l_i.uniPipeInfo.pipeType = NONBLOCKING;
+
+   l_o.linkType = UNIPIPE;
+   l_o.linkID = 1;
+   l_o.uniPipeInfo.pipeType = NONBLOCKING;
+
+   l_i2.linkType = UNIPIPE;
+   l_i2.linkID = 3;
+   l_i2.uniPipeInfo.pipeType = NONBLOCKING;
+
+   l_o2.linkType = UNIPIPE;
+   l_o2.linkID = 4;
+   l_o2.uniPipeInfo.pipeType = NONBLOCKING;
+
+   switchLinks * header = constructLink(l_i,l_o, 1);
+   switchLinks * test = constructLink(l_i,l_o, 1);
+   addLink(&header, test);
+   TestIterate(&header);
 
 }
