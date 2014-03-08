@@ -46,31 +46,23 @@
 #define VALID 1
 #define LINK_OFFSET 1
 
-void switchInitTable(switchState * sstate, int linkcnt)
-{
-  int links[MAX_LINKS];
-  int x;
-  
-  for(x = 0; x < linkcnt; x++) {
-     links[x] = x;
-  }
-
-  FWTable * head = createTable(FIRST_ADDR, links, INVALID); 
-  sstate->ftable = head;
-  for(x = 1; x < linkcnt - LINK_OFFSET; x++){
-      fwTableAdd(&head, links, INVALID); 
-  }
-}
-
-void switchInitState(switchState * sstate, int physid, int linkcnt)
+void switchInitState(switchState * sstate, int physid)
 {
    //only initializes id, links have to be added through a loop
    sstate->physid = physid;
-   switchInitTable(sstate, linkcnt);
 }
-void switchRecvPacketBuff(switchState * s_state, packetBuffer * pbuff)
+void switchRecvPacketBuff(switchState * s_state, int lid, packetBuffer * pbuff)
 {
-   //Adds packetbuffer to Queue
+   int src = pbuff->srcaddr;
+   /* Update table entry */
+   if(s_state->ftable == NULL){
+      FWTable * fable = createTable(src, lid, VALID);
+      s_state->ftable = fable;
+   } else {
+      FWTable * fable == createTable(src, lid, VALID);
+      fwTableAdd(&(s_state->fable), fable);
+   }
+   //Add Packet to Buffer
    enQueue((s_state->recvPQ), &pbuff);
 }
 void switchSendPacketBuff(switchState * s_state)
@@ -79,17 +71,17 @@ void switchSendPacketBuff(switchState * s_state)
       //Send data from top of queue
       //Packet from top of queue
       int destaddr; //Destination address
+      int sourceaddr;
       packetBuffer * temp = front(s_state->recvPQ);
       destaddr = temp.dstaddr;
+      sourceaddr = temp.srcaddr;
 
       //Forwarding Table Entry not found
       FWTable ** ft = fwTableSearch(&(s_state->ftable), destaddr);
       if(ft == NULL) {
          switchSendAll(s_state);
-
       } else {
-             
-      
+          
       }
 
    
@@ -99,7 +91,7 @@ void switchSendPacketBuff(switchState * s_state)
 
 void switchSendAll(switchState * s_state)
 {
-
+   
 }
 
 void switchTransmitPacket(switchState * s_state)

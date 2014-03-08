@@ -3,7 +3,6 @@
 */
 
 typedef struct switchLinks {
-   int hostid;
    LinkInfo linkin;
    LinkInfo linkout;
    struct switchLinks * next;

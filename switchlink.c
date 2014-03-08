@@ -11,7 +11,6 @@ switchLinks * constructLink(LinkInfo in, LinkInfo out, int id)
    head = (switchLinks *) malloc(sizeof(switchLinks));
    head->linkin = in;
    head->linkout = out;
-   head->hostid = id;
    return head;
 }
 
@@ -40,7 +39,7 @@ switchLinks ** linkSearch(switchLinks ** head, int id)
       return NULL;
    } else {
       index = *head;
-      if(index->hostid = id){
+      if(index->linkout.uniPipeInfo.physIdSrc == id){
          return head;
       } else {
          return linkSearch(&(index->next), id);

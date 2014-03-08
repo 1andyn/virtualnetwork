@@ -9,6 +9,13 @@ enum LinkType {UNIPIPE}; /* UNIPIPE = unidirectional pipe
 
 enum UniPipeType {BLOCKING, NONBLOCKING};
 
+
+//PhysIdSrc is the SOURCE of connection
+//Pipes are unidirection (one direction, so there is a source)
+//PhysIdDst are the destination of connection
+//So if your linkIN is say to the switch, the dst is the id of the switch
+//and the src is the hostID
+
 typedef struct {
    enum UniPipeType pipeType;
    int         fd[2];
