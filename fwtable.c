@@ -90,9 +90,6 @@ int main()
    fwTableIterate(&head); 
    
    
-   FWTable ** sch = fwTableSearch(&head, 0);
-   if(sch == NULL) {
-      printf("Something wrong occured\n");
-   }
-   printf("Found: %s as link number,\n",(*sch)->out_link);
+   FWTable ** sch = fwTableSearch(&head, 2);
+   printf("Found: %d as link number,\n",(*sch)->out_link);
 }
