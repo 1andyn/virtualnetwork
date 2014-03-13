@@ -49,11 +49,11 @@ switchLinks ** linkSearch(switchLinks ** head, int id)
 
 void TestIterate(switchLinks ** head)
 {
-   switchLinks ** ptr = head;
-   while(*ptr != NULL) {
-      printf("LinkID: %d, LinkID2: %d \n", (*ptr)->linkout.linkID, 
-      (*ptr)->linkin.linkID);
-      *ptr = (*ptr)->next;
+   switchLinks * ptr = *head;
+   while(ptr != NULL) {
+      printf("LinkID: %d, LinkID2: %d \n", (ptr)->linkout.linkID, 
+      (ptr)->linkin.linkID);
+      ptr = (ptr)->next;
    }
 }
 

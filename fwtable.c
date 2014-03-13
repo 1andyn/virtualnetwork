@@ -58,11 +58,11 @@ void fwTableUpdate(FWTable ** head, int des_addr, int new_link, int val)
 
 void fwTableIterate(FWTable ** head)
 {
-   FWTable ** iterate = head;
-   while(*iterate != NULL){
-      printf("Addr: %d, Link:%d, Valid:%d \n", (*iterate)->dest_addr,
-      (*iterate)->out_link[0], (*iterate)->valid);
-      *iterate = (*iterate)->next;
+   FWTable * iterate = *head;
+   while(iterate != NULL){
+      printf("Addr: %d, Link:%d, Valid:%d \n", (iterate)->dest_addr,
+      (iterate)->out_link, (iterate)->valid);
+      iterate = (iterate)->next;
    }
 }
 
@@ -72,7 +72,7 @@ int main()
    FWTable * head = createTable(0, 4, 0);
    FWTable * other = createTable(1,7,0);
    FWTable * newt = createTable(2,6,0);
-   FWTable * test = createTable(3,1,0);
+   FWTable * test = createTable(3,1,1);
    
 
    fwTableAdd(&head, other);
@@ -83,4 +83,16 @@ int main()
    fwTableUpdate(&head, 4, 2, 1);
 
    fwTableIterate(&head);
+
+
+   fwTableUpdate(&head, 0, 8, 1);
+   printf("New Iteration: \n");
+   fwTableIterate(&head); 
+   
+   
+   FWTable ** sch = fwTableSearch(&head, 0);
+   if(sch == NULL) {
+      printf("Something wrong occured\n");
+   }
+   printf("Found: %s as link number,\n",(*sch)->out_link);
 }
