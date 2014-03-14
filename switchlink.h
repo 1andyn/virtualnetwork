@@ -8,7 +8,9 @@ typedef struct switchLinks {
    struct switchLinks * next;
 } switchLinks;
 
-switchLinks * constructLink(LinkInfo in, LinkInfo out, int id);
+switchLinks * constructLink(LinkInfo in, LinkInfo out);
 LinkInfo * linkSearch(switchLinks ** head, int id);
 LinkInfo * outputLink(switchLinks ** head, int out_id);
 void addLink(switchLinks ** head, switchLinks * newlink);
+
+switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head);

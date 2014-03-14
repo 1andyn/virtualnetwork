@@ -7,13 +7,38 @@
 
 #define LINK_ERROR -2
 
-switchLinks * constructLink(LinkInfo in, LinkInfo out, int id)
+switchLinks * constructLink(LinkInfo in, LinkInfo out)
 {
    switchLinks * head;
    head = (switchLinks *) malloc(sizeof(switchLinks));
    head->linkin = in;
    head->linkout = out;
    return head;
+}
+
+
+switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head)
+{
+  int i,y;
+  for(i = 0; i < NUMLINKS; i++){
+      if(linkArray->link[i].uniPipeInfo.physIdSrc == switchID){
+         LinkInfo out = linkArray->link[i];
+         for(y = 0; y < NUMLINKS; y++) {
+            if(linkArray->link[y].uniPipeInfo.physIdDst == switchID){
+               LinkInfo in = linkArray->link[y];
+               if(head == NULL) {
+                  head = constructLink(in, out);
+                  break;
+               } else {
+                  switchLinks * newlink = constructLink(in, out);
+                  addLink(&head, newlink);
+                  break;
+               }
+            }
+        }
+      }
+  }
+  return head; 
 }
 
 void addLink(switchLinks ** head, switchLinks * newlink)

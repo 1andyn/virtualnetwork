@@ -124,10 +124,20 @@ close(manLinkArray->link[hostid].toHost[PIPEWRITE]);
 
 void netSetNetworkTopology(linkArrayType * linkArray)
 {
-linkArray->link[0].uniPipeInfo.physIdSrc = 0;
-linkArray->link[0].uniPipeInfo.physIdDst = 1;
-linkArray->link[1].uniPipeInfo.physIdSrc = 1;
-linkArray->link[1].uniPipeInfo.physIdDst = 0;
+   linkArray->link[0].uniPipeInfo.physIdSrc = 0;
+   linkArray->link[0].uniPipeInfo.physIdDst = 3;
+   linkArray->link[1].uniPipeInfo.physIdSrc = 3;
+   linkArray->link[1].uniPipeInfo.physIdDst = 0;
+
+   linkArray->link[2].uniPipeInfo.physIdSrc = 3;
+   linkArray->link[2].uniPipeInfo.physIdDst = 1;
+   linkArray->link[3].uniPipeInfo.physIdSrc = 1;
+   linkArray->link[3].uniPipeInfo.physIdDst = 3;
+
+   linkArray->link[4].uniPipeInfo.physIdSrc = 2;
+   linkArray->link[4].uniPipeInfo.physIdDst = 3;
+   linkArray->link[5].uniPipeInfo.physIdSrc = 3;
+   linkArray->link[5].uniPipeInfo.physIdDst = 2;
 }
 
 /*
@@ -142,7 +152,7 @@ int index;
 index = linkArray->numlinks;
 
 for (i=0; i<linkArray->numlinks; i++) {
-   /* Store index if the outgoing link is found */
+   /* Store index if the outgoi */
    if (linkArray->link[i].uniPipeInfo.physIdSrc == hostid) 
       index = i;
 }

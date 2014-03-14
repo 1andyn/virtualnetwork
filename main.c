@@ -12,19 +12,26 @@
 #include "link.h"
 #include "man.h"
 #include "host.h"
+#include "switch.h"
 #include "net.h"
+#include "switchlink.h"
 
 #define EMPTY_ADDR  0xffff  /* Indicates that the empty address */
                              /* It also indicates that the broadcast address */
 #define MAXBUFFER 1000
 #define PIPEWRITE 1 
 #define PIPEREAD  0
+#define NODECOUNT 3
 
 void main()
 {
 hostState hstate;             /* The host's state */
+switchState sstate;
 linkArrayType linkArray;
 manLinkArrayType manLinkArray;
+
+/* Intialie Switch Links to NULL */
+sstate.sLinks = NULL;
 
 pid_t pid;  /* Process id */
 int physid; /* Physical ID of host */
@@ -48,41 +55,45 @@ netCreateLinks(& linkArray);
 netSetNetworkTopology(& linkArray);
 
 /* Create nodes and spawn their own processes, one process per node */ 
-
-for (physid = 0; physid < NUMHOSTS; physid++) {
+for (physid = 0; physid < NUMHOSTS + 1; physid++) {
+printf("Iteration: %d\n", physid);
 
    pid = fork();
-
    if (pid == -1) {
       printf("Error:  the fork() failed\n");
       return;
    }
    else if (pid == 0) { /* The child process -- a host node */
+      if(physid == NUMHOSTS){
+         switchInitState(&sstate, physid);
+         sstate.sLinks = getswitchLinks(&linkArray, physid, sstate.sLinks);
+         netCloseHostOtherLinks(&linkArray, physid); 
+         switchMain(&sstate);
+      } else {
+         hostInit(&hstate, physid); /* Initialize host's state */
 
-      hostInit(&hstate, physid);              /* Initialize host's state */
+         /* Initialize the connection to the manager */ 
+         hstate.manLink = manLinkArray.link[physid];
 
-      /* Initialize the connection to the manager */ 
-      hstate.manLink = manLinkArray.link[physid];
+         /* 
+          * Close all connections not connect to the host
+          * Also close the manager's side of connections to host
+          */
+         netCloseConnections(& manLinkArray, physid);
 
-      /* 
-       * Close all connections not connect to the host
-       * Also close the manager's side of connections to host
-       */
-      netCloseConnections(& manLinkArray, physid);
+         /* Initialize the host's incident communication links */
+         k = netHostOutLink(&linkArray, physid); /* Host's outgoing link */
+         hstate.linkout = linkArray.link[k];
 
-      /* Initialize the host's incident communication links */
+         k = netHostInLink(&linkArray, physid); /* Host's incoming link */
+         hstate.linkin = linkArray.link[k];
 
-      k = netHostOutLink(&linkArray, physid); /* Host's outgoing link */
-      hstate.linkout = linkArray.link[k];
+         /* Close all other links -- not connected to the host */
+         netCloseHostOtherLinks(& linkArray, physid);
 
-      k = netHostInLink(&linkArray, physid); /* Host's incoming link */
-      hstate.linkin = linkArray.link[k];
-
-      /* Close all other links -- not connected to the host */
-      netCloseHostOtherLinks(& linkArray, physid);
-
-      /* Go to the main loop of the host node */
-      hostMain(&hstate);
+         /* Go to the main loop of the host node */
+         hostMain(&hstate);
+      }
    }  
 }
 

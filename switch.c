@@ -30,11 +30,11 @@
 #include "link.h"
 #include "man.h"
 #include "host.h"
-#include "switchlink.h"
-#include "switch.h"
-#include "utilities.h"
 #include "fwtable.h"
+#include "utilities.h"
+#include "switchlink.h"
 #include "pkqueue.h"
+#include "switch.h"
 
 #define EMPTY_ADDR  0xffff  /* Indicates that the empty address */
 #define MAXBUFFER 1000
@@ -131,8 +131,6 @@ void switchSetLinkHead(switchState * sstate, switchLinks * head)
 void switchMain(switchState * sstate)
 {
    packetBuffer tmpbuff; 
-
-
    while(1){
       scanAllLinks(sstate, &tmpbuff); 
       switchSendPacketBuff(sstate);
@@ -141,8 +139,3 @@ void switchMain(switchState * sstate)
    }
 }
 
-/*
-int main()
-{
-   //do nothing
-}*/
