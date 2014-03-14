@@ -52,20 +52,23 @@ void switchInitState(switchState * sstate, int phys)
    sstate->physid = phys;
 }
 
-void switchRecvPacketBuff(switchState * sstate, int lid, packetBuffer * pbuff)
+void switchRecvPacketBuff(switchState * sstate, int in_id, packetBuffer * pbuff)
 {
    int src = pbuff->srcaddr;
+   LinkInfo * out = linkSearch(sstate->SLinks, in_id);
+   int outlink =  out->linkID;
+
    /* Update table entry */
    /* First Case Table is Empty */
    if(sstate->ftable == NULL){
-      FWTable * fable = createTable(src, lid, VALID);
+      FWTable * fable = createTable(src, outlink, VALID);
       sstate->ftable = fable;
    } else {
       FW ** search_index = fwTableSearch(&(sstate->ftable), src);
       //If the source address doesn't already exist
       //(we have not associated the address with a link yet)
       if(search_index == NULL){
-         FWTable * fable == createTable(src, lid, VALID);
+         FWTable * fable == createTable(src, outlink, VALID);
          fwTableAdd(&(s_state->fable), fable);
       }
    }
@@ -73,20 +76,20 @@ void switchRecvPacketBuff(switchState * sstate, int lid, packetBuffer * pbuff)
    enQueue((s_state->recvPQ), &pbuff);
 }
 
-void switchSendPacketBuff(switchState * s_state)
+void switchSendPacketBuff(switchState * sstate)
 {
-   if(!isEmpty(s_state->recvPQ)){
+   if(!isEmpty(sstate->recvPQ)){
       //Send data from top of queue
       //Packet from top of queue
       int destaddr, sourceaddr;
-      packetBuffer * temp = front(s_state->recvPQ);
+      packetBuffer * temp = front(sstate->recvPQ);
       destaddr = temp.dstaddr;
       sourceaddr = temp.srcaddr;
 
       //Forwarding Table Entry not found
-      FWTable ** ft = fwTableSearch(&(s_state->ftable), destaddr);
+      FWTable ** ft = fwTableSearch(&(sstate->ftable), destaddr);
       if(ft == NULL) {
-         switchSendAll(s_state, sourceaddr);
+         switchSendAll(sstate, sourceaddr);
       } else {
           
       }
@@ -108,13 +111,16 @@ void switchTransmitPacket(switchState * s_state)
    findWord(dest, word, 2);
    dstraddr = ascii2Int(dest);
    
-   s_state->recvPQ
-   
-   s_state->sendBuffer.dstaddr = dstaddr;
-
-   s_state->sendBuffer.srcaddr =  
 
 }
+
+
+void scanAllLinks(switchState * sstate, packetBuffer *buff)
+{
+   
+}
+
+
 
 void switchSetLinkHead(switchState * sstate, switchLinks * head)
 {
@@ -128,18 +134,13 @@ void switchSetPacketHead(switchState * sstate, FWTable * head)
 
 void switchMain(switchState * sstate)
 {
-   char buffer[1000];
-   char word[1000];
-   
-   //Data Structures for switch
-   FWTable * table;
-   PacketQueue *
-   switchLinks *
+  packetBuffer * buff = (packetBuffer *) malloc(sizeof(packetBuffer)); 
 
    
    while(1){
-      LinkInfo *linkptr = 
-      linkReceive(&(s_state 
+    scanAllLinks(sstate, buff); 
+     
+     
      //does the switch sleep? 
       usleep(TENMILLISEC);  
    }

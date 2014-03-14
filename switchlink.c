@@ -42,7 +42,7 @@ LinkInfo * linkSearch(switchLinks ** head, int in_id)
       return NULL;
    } else {
       index = *head;
-      if(index->linkin.uniPipeInfo.physIdSrc= in_id){
+      if(index->linkin.linkID= in_id){
          return &(index->linkout);
       } else {
          return linkSearch(&(index->next), in_id);
