@@ -73,7 +73,9 @@ void switchRecvPacketBuff(switchState * sstate, int in_id, packetBuffer * pbuff)
       }
    }
    //Add Packet to Buffer
-   enQueue((sstate->recvPQ), *pbuff);
+   if(pbuff->valid == 1){ 
+      enQueue((sstate->recvPQ), *pbuff);
+   }
 }
 
 void switchSendAll(switchState * sstate, int src, packetBuffer * recv)

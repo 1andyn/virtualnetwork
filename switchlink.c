@@ -23,8 +23,9 @@ switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLink
   for(i = 0; i < NUMLINKS; i++){
       if(linkArray->link[i].uniPipeInfo.physIdSrc == switchID){
          LinkInfo out = linkArray->link[i];
+         int corr_dest = linkArray->link[i].uniPipeInfo.physIdDst;
          for(y = 0; y < NUMLINKS; y++) {
-            if(linkArray->link[y].uniPipeInfo.physIdDst == switchID){
+            if(linkArray->link[y].uniPipeInfo.physIdSrc == corr_dest){
                LinkInfo in = linkArray->link[y];
                if(head == NULL) {
                   head = constructLink(in, out);
@@ -94,12 +95,20 @@ LinkInfo * outputLink(switchLinks ** head, int out_id)
 
 void TestIterate(switchLinks ** head)
 {
+
+   printf("\n");
    switchLinks * ptr = *head;
    while(ptr != NULL) {
-      printf("LinkID: %d, LinkID2: %d \n", (ptr)->linkout.linkID, 
-      (ptr)->linkin.linkID);
+      printf("LinkOut ID: %d \n", (ptr)->linkout.linkID); 
+      printf("LinkOut src: %d, LinkOut dest: %d \n", (ptr)->linkout.uniPipeInfo.physIdSrc, (ptr)->linkout.uniPipeInfo.physIdDst);
+      
+      
+      printf("LinkIn ID: %d,\n", (ptr)->linkin.linkID);
+      printf("LinkIn src: %d, LinkIn dest: %d \n", (ptr)->linkin.uniPipeInfo.physIdSrc, (ptr)->linkin.uniPipeInfo.physIdDst);
       ptr = (ptr)->next;
+   printf("\n");
    }
+   printf("\n");
 }
 
 /*

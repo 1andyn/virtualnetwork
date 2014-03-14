@@ -66,6 +66,7 @@ for (physid = 0; physid < NUMHOSTS + 1; physid++) {
       if(physid == NUMHOSTS){
          switchInitState(&sstate, physid);
          sstate.sLinks = getswitchLinks(&linkArray, physid, sstate.sLinks);
+         TestIterate(&(sstate.sLinks)); 
          netCloseHostOtherLinks(&linkArray, physid); 
          switchMain(&sstate);
       } else {
