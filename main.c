@@ -56,7 +56,6 @@ netSetNetworkTopology(& linkArray);
 
 /* Create nodes and spawn their own processes, one process per node */ 
 for (physid = 0; physid < NUMHOSTS + 1; physid++) {
-printf("Iteration: %d\n", physid);
 
    pid = fork();
    if (pid == -1) {
