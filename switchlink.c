@@ -42,10 +42,27 @@ LinkInfo * linkSearch(switchLinks ** head, int in_id)
       return NULL;
    } else {
       index = *head;
-      if(index->linkin.uniPipeInfo.physIDSrc= in_id){
+      if(index->linkin.uniPipeInfo.physIdSrc= in_id){
          return &(index->linkout);
       } else {
          return linkSearch(&(index->next), in_id);
+      }
+   }
+}
+
+
+LinkInfo * outputLink(switchLinks ** head, int out_id)
+{
+   /*Recursive Search*/
+   switchLinks * index;
+   if(*head == NULL){
+      return NULL;
+   } else {
+      index = *head;
+      if(index->linkout.linkID= out_id){
+         return &(index->linkout);
+      } else {
+         return linkSearch(&(index->next), out_id);
       }
    }
 }
@@ -86,8 +103,12 @@ int main()
    l_o2.uniPipeInfo.pipeType = NONBLOCKING;
 
    switchLinks * header = constructLink(l_i,l_o, 1);
-   switchLinks * test = constructLink(l_i,l_o, 1);
+   switchLinks * test = constructLink(l_i2,l_o2, 1);
    addLink(&header, test);
    TestIterate(&header);
+   
+   LinkInfo * tester = outputLink(&header, 4);
+   printf("Tester: %d \n", tester->linkID);
+
 
 }
