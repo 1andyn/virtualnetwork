@@ -133,11 +133,11 @@ void switchSetLinkHead(switchState * sstate, switchLinks * head)
 void switchMain(switchState * sstate)
 {
    packetBuffer tmpbuff; 
-   while(1){
-      scanAllLinks(sstate, &tmpbuff); 
-      switchSendPacketBuff(sstate);
+//   while(1){
+  //    scanAllLinks(sstate, &tmpbuff); 
+    //  switchSendPacketBuff(sstate);
       //does the switch sleep? 
 //      usleep(TENMILLISEC);  
-   }
+  // }
 }
 

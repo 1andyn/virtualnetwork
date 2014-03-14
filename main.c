@@ -94,11 +94,8 @@ for (physid = 0; physid < NUMHOSTS + 1; physid++) {
          /* Go to the main loop of the host node */
          hostMain(&hstate);
       }
-   }  
+   } 
 }
-
-/* Manager */
-
 /* 
  * The manager is connected to the hosts and doesn't
  * need the links between nodes
