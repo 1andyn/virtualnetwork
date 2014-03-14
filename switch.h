@@ -15,7 +15,8 @@ typedef struct {
 } switchState;
 
 //Initialization Functions
-void switchMain(switchState * sstate, int phys);
+
+void switchInitState(switchState * sstate, int phys);
 void switchSetLinkHead(switchState * sstate, switchLinks * head);
 
 

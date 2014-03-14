@@ -25,7 +25,7 @@ link.o:  link.c
 	gcc -c link.c
 
 switch.o: switch.c
-	gcc -c switch.c
+	gcc -c switch.c 
 
 pkqueue.o: pkqueue.c
 	gcc -c pkqueue.c
