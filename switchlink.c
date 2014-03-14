@@ -5,6 +5,8 @@
 #include "link.h"
 #include "switchlink.h"
 
+#define LINK_ERROR -2
+
 switchLinks * constructLink(LinkInfo in, LinkInfo out, int id)
 {
    switchLinks * head;
@@ -31,7 +33,8 @@ void addLink(switchLinks ** head, switchLinks * newlink)
    }
 }
 
-switchLinks ** linkSearch(switchLinks ** head, int id)
+//Returns Outlink
+LinkInfo * linkSearch(switchLinks ** head, int in_id)
 {
    /*Recursive Search*/
    switchLinks * index;
@@ -39,10 +42,10 @@ switchLinks ** linkSearch(switchLinks ** head, int id)
       return NULL;
    } else {
       index = *head;
-      if(index->linkout.uniPipeInfo.physIdSrc == id){
-         return head;
+      if(index->linkin.uniPipeInfo.physIDSrc= in_id){
+         return &(index->linkout);
       } else {
-         return linkSearch(&(index->next), id);
+         return linkSearch(&(index->next), in_id);
       }
    }
 }

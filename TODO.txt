@@ -8,10 +8,18 @@ Questions
 
 
 Improvement #1
--Currently implementing FWTable container
--PacketQueue Container
--Switch Implementation
+Currently inplmenting switch, need to rewrite net.c and main.c to be able to test switch.
 
+Associating Source Address to LINK = head->linkin.uniPipeInfo.physIDSrc;
+
+
+------------
+Check for Data using linkReceive. Parameters (ingoing link, packetBuffer)
+Function modifies packetBuffer and sets data based on whether it is valid or not-----------
+
+-----------
+Send Data using linkSend. Parameters are (outgoing link, packetBuffer)
+-----------
 
 
 Improvement #2

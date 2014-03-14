@@ -14,5 +14,10 @@ typedef struct {
    struct switchLinks * sLinks; //Container of all connections   
 } switchState;
 
+//Initialization Functions
+void switchMain(switchState * sstate, int phys);
+void switchSetLinkHead(switchState * sstate, switchLinks * head);
+
+
+//Main run function
 void switchMain(switchState * sstate);
-void switchSetLinkHead(switch * s_state, switchLinks * head);

@@ -12,3 +12,4 @@ FWTable * createTable(int dest, int link, int val);
 void fwTableAdd(FWTable ** head, FWTable * newentry);
 void fwTableUpdate(FWTable ** head, int des_addr, int new_link, int val);
 FWTable ** fwTableSearch(FWTable ** head, int dest);
+int linkDestSearch(FWTable ** head, int des);

@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "fwtable.h"
 
+#define NOT_FOUND -1
+
 // Creates a Table Entry for FWTable
 FWTable * createTable(int dest, int link, int val)
 {
@@ -56,6 +58,16 @@ void fwTableUpdate(FWTable ** head, int des_addr, int new_link, int val)
    }
 }
 
+int linkDestSearch(FWTable ** head, int des)
+{
+   FWTable ** sch = fwTableSearch(head, des);
+   if(sch == NULL) {
+      return NOT_FOUND; 
+   } else {
+      return ((*sch)->out_link);
+   }
+}
+
 void fwTableIterate(FWTable ** head)
 {
    FWTable * iterate = *head;
@@ -88,6 +100,8 @@ int main()
    fwTableUpdate(&head, 0, 8, 1);
    printf("New Iteration: \n");
    fwTableIterate(&head); 
+
+   printf("Corresponding outlink to dest 0 is %d \n", linkDestSearch(&head,0)); 
    
    
    FWTable ** sch = fwTableSearch(&head, 2);

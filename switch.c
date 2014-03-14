@@ -40,38 +40,45 @@
 #define MAXBUFFER 1000
 #define PIPEWRITE 1 
 #define PIPEREAD  0
-#define MAX_LINKS 20 /* Arbitrary value for Link Max */
 #define FIRST_ADDR 0
 #define INVALID 0
 #define VALID 1
 #define LINK_OFFSET 1
+#define NOT_FOUND -1
 
-void switchInitState(switchState * sstate, int physid)
+void switchInitState(switchState * sstate, int phys)
 {
-   //only initializes id, links have to be added through a loop
-   sstate->physid = physid;
+   sstate->recvPQ = createQueue();
+   sstate->physid = phys;
 }
-void switchRecvPacketBuff(switchState * s_state, int lid, packetBuffer * pbuff)
+
+void switchRecvPacketBuff(switchState * sstate, int lid, packetBuffer * pbuff)
 {
    int src = pbuff->srcaddr;
    /* Update table entry */
-   if(s_state->ftable == NULL){
+   /* First Case Table is Empty */
+   if(sstate->ftable == NULL){
       FWTable * fable = createTable(src, lid, VALID);
-      s_state->ftable = fable;
+      sstate->ftable = fable;
    } else {
-      FWTable * fable == createTable(src, lid, VALID);
-      fwTableAdd(&(s_state->fable), fable);
+      FW ** search_index = fwTableSearch(&(sstate->ftable), src);
+      //If the source address doesn't already exist
+      //(we have not associated the address with a link yet)
+      if(search_index == NULL){
+         FWTable * fable == createTable(src, lid, VALID);
+         fwTableAdd(&(s_state->fable), fable);
+      }
    }
    //Add Packet to Buffer
    enQueue((s_state->recvPQ), &pbuff);
 }
+
 void switchSendPacketBuff(switchState * s_state)
 {
    if(!isEmpty(s_state->recvPQ)){
       //Send data from top of queue
       //Packet from top of queue
-      int destaddr; //Destination address
-      int sourceaddr;
+      int destaddr, sourceaddr;
       packetBuffer * temp = front(s_state->recvPQ);
       destaddr = temp.dstaddr;
       sourceaddr = temp.srcaddr;
@@ -79,7 +86,7 @@ void switchSendPacketBuff(switchState * s_state)
       //Forwarding Table Entry not found
       FWTable ** ft = fwTableSearch(&(s_state->ftable), destaddr);
       if(ft == NULL) {
-         switchSendAll(s_state);
+         switchSendAll(s_state, sourceaddr);
       } else {
           
       }
@@ -109,14 +116,17 @@ void switchTransmitPacket(switchState * s_state)
 
 }
 
-void switchSetLinkHead(switchState * s_state, switchLinks * head)
+void switchSetLinkHead(switchState * sstate, switchLinks * head)
 {
-   sLinks = head;
+   sstate->sLinks = head;
 }
 
+void switchSetPacketHead(switchState * sstate, FWTable * head)
+{
+   sstate->recvPq = head;
+}
 
-
-void switchMain(switchState * s_state)
+void switchMain(switchState * sstate)
 {
    char buffer[1000];
    char word[1000];
