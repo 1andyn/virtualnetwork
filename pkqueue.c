@@ -47,6 +47,7 @@ packetBuffer * front(const PacketQueue * pq)
    }
 }
 
+/*
 void TestIterate(const PacketQueue * pq)
 {
    PKQueue * ptrptr = pq->head;
@@ -54,9 +55,9 @@ void TestIterate(const PacketQueue * pq)
       printf("Payload, '%s' \n", ptrptr->rcvPKB.payload);
       ptrptr = ptrptr->next;
    }
-}
+}*/
 
-int IsEmpty(const PacketQueue *pq)
+int isEmpty(const PacketQueue *pq)
 {
    if(pq->head == NULL) {
       return 1;
@@ -67,17 +68,19 @@ int IsEmpty(const PacketQueue *pq)
 
 void deQueue(PacketQueue * pq)
 {
-   if(!IsEmpty(pq)){
+   if(!isEmpty(pq)){
       PKQueue * temp = pq->head;
       pq->head = (pq->head)->next;
       free(temp); //Deallocate
    }
 }
 
+
+
 //This is just driver code for testing purposes
+/*
 int main()
 {
-   /* Test Packet Buffer */
    packetBuffer temp;
    temp.valid = 2;
    temp.new = 3;
@@ -87,7 +90,6 @@ int main()
    strcpy(temp.payload, "hello");
    temp.sendrcv = 9;
    
-   /* Test Packet Buffer 2*/
    packetBuffer temp2;
    temp2.valid = 2;
    temp2.new = 3;
@@ -97,7 +99,6 @@ int main()
    strcpy(temp2.payload, "good day");
    temp2.sendrcv = 9;
    
-   /* Test Packet Buffer 3*/
    packetBuffer temp3;
    temp3.valid = 2;
    temp3.new = 3;
@@ -179,5 +180,5 @@ int main()
   
    
 }
-
+*/
 

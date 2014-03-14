@@ -78,6 +78,7 @@ void fwTableIterate(FWTable ** head)
    }
 }
 
+/*
 //This is just driver code for testing purposes
 int main()
 {
@@ -106,4 +107,4 @@ int main()
    
    FWTable ** sch = fwTableSearch(&head, 2);
    printf("Found: %d as link number,\n",(*sch)->out_link);
-}
+}*/

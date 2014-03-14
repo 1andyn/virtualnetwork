@@ -77,6 +77,7 @@ void TestIterate(switchLinks ** head)
    }
 }
 
+/*
 //This is just drive code for testing purposes
 int main()
 {
@@ -111,4 +112,4 @@ int main()
    printf("Tester: %d \n", tester->linkID);
 
 
-}
+}*/

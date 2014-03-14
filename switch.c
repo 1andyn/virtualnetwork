@@ -135,13 +135,14 @@ void switchMain(switchState * sstate)
 
    while(1){
       scanAllLinks(sstate, &tmpbuff); 
-      switchSendPacketBuffer(sstate);
+      switchSendPacketBuff(sstate);
       //does the switch sleep? 
 //      usleep(TENMILLISEC);  
    }
 }
 
+/*
 int main()
 {
    //do nothing
-}
+}*/
