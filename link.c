@@ -140,12 +140,13 @@ if (link->linkType==UNIPIPE) {
          highbits = highbits * 16; /* Shift to the left by 4 bits */
          pbuff->payload[k] = highbits + lowbits;
       } /* end of for */
+     
       pbuff->payload[k] = '\0';
       pbuff->valid=1;
       pbuff->new=1;
-   } /* end of if */
-
-   else { /* Not a packet */
+   } else { 
+   /* end of if */
+   /* Not a packet */
       pbuff->valid=0;
       pbuff->new=0;
    }
@@ -185,6 +186,7 @@ if (pbuff->length <= 0) {
    return -1;
 }
 
+
 sendbuff[0] = ' ';  /* Start message with a space */
 sendbuff[1] = '\0';
 
@@ -210,6 +212,7 @@ appendWithSpace(sendbuff, word);
  * and the second byte is the low order bits.
  */
 
+
 for (k = 0; k < pbuff->length; k++) {
    lowbits = pbuff->payload[k];
    highbits = lowbits;
@@ -225,7 +228,7 @@ newpayload[2*k] = '\0';
 appendWithSpace(sendbuff, newpayload);
 
 if (link->linkType==UNIPIPE) {
-   write(link->uniPipeInfo.fd[PIPEWRITE],sendbuff,strlen(sendbuff)); 
+   write(link->uniPipeInfo.fd[PIPEWRITE],sendbuff,strlen(sendbuff));
 }
 
 /* Used for DEBUG -- trace packets being sent */

@@ -66,7 +66,6 @@ for (physid = 0; physid < NUMHOSTS + 1; physid++) {
       if(physid == NUMHOSTS){
          switchInitState(&sstate, physid);
          sstate.sLinks = getswitchLinks(&linkArray, physid, sstate.sLinks);
-         TestIterate(&(sstate.sLinks)); 
          netCloseHostOtherLinks(&linkArray, physid); 
          switchMain(&sstate);
       } else {
@@ -80,13 +79,16 @@ for (physid = 0; physid < NUMHOSTS + 1; physid++) {
           * Also close the manager's side of connections to host
           */
          netCloseConnections(& manLinkArray, physid);
-
+         
          /* Initialize the host's incident communication links */
          k = netHostOutLink(&linkArray, physid); /* Host's outgoing link */
          hstate.linkout = linkArray.link[k];
 
          k = netHostInLink(&linkArray, physid); /* Host's incoming link */
          hstate.linkin = linkArray.link[k];
+
+         /* Set Neighbor Address */
+         hstate.nbraddr = hstate.linkin.uniPipeInfo.physIdSrc;
 
          /* Close all other links -- not connected to the host */
          netCloseHostOtherLinks(& linkArray, physid);

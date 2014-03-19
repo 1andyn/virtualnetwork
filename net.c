@@ -124,18 +124,28 @@ close(manLinkArray->link[hostid].toHost[PIPEWRITE]);
 
 void netSetNetworkTopology(linkArrayType * linkArray)
 {
+
+   //Link 0, Host 0 to Switch 3
    linkArray->link[0].uniPipeInfo.physIdSrc = 0;
    linkArray->link[0].uniPipeInfo.physIdDst = 3;
+   
+   //Link 1, Switch 3 to Host 0
    linkArray->link[1].uniPipeInfo.physIdSrc = 3;
    linkArray->link[1].uniPipeInfo.physIdDst = 0;
 
+   //Link 2, Switch 3 to Host 1
    linkArray->link[2].uniPipeInfo.physIdSrc = 3;
    linkArray->link[2].uniPipeInfo.physIdDst = 1;
+
+   //Link 3, Host 1 to Switch 3
    linkArray->link[3].uniPipeInfo.physIdSrc = 1;
    linkArray->link[3].uniPipeInfo.physIdDst = 3;
 
+   //Link 4, Host 2 to Switch 3
    linkArray->link[4].uniPipeInfo.physIdSrc = 2;
    linkArray->link[4].uniPipeInfo.physIdDst = 3;
+
+   //Link 5 Switch 3 to Host 2
    linkArray->link[5].uniPipeInfo.physIdSrc = 3;
    linkArray->link[5].uniPipeInfo.physIdDst = 2;
 }

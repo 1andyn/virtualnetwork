@@ -121,6 +121,7 @@ dstaddr = ascii2Int(dest);
 hstate->sendPacketBuff.dstaddr = dstaddr;
 hstate->sendPacketBuff.srcaddr = hstate->netaddr;
 
+
 /* Transmit the packet on the link */
 linkSend(&(hstate->linkout), &(hstate->sendPacketBuff));
 

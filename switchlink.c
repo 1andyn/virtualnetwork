@@ -19,8 +19,8 @@ switchLinks * constructLink(LinkInfo in, LinkInfo out)
 
 switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head)
 {
-  int i,y;
-  for(i = 0; i < NUMLINKS; i++){
+   int i,y;
+   for(i = 0; i < NUMLINKS; i++){
       if(linkArray->link[i].uniPipeInfo.physIdSrc == switchID){
          LinkInfo out = linkArray->link[i];
          int corr_dest = linkArray->link[i].uniPipeInfo.physIdDst;
@@ -36,10 +36,10 @@ switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLink
                   break;
                }
             }
-        }
+         }
       }
-  }
-  return head; 
+   }
+   return head; 
 }
 
 void addLink(switchLinks ** head, switchLinks * newlink)
@@ -101,12 +101,12 @@ void TestIterate(switchLinks ** head)
    while(ptr != NULL) {
       printf("LinkOut ID: %d \n", (ptr)->linkout.linkID); 
       printf("LinkOut src: %d, LinkOut dest: %d \n", (ptr)->linkout.uniPipeInfo.physIdSrc, (ptr)->linkout.uniPipeInfo.physIdDst);
-      
-      
+
+
       printf("LinkIn ID: %d,\n", (ptr)->linkin.linkID);
       printf("LinkIn src: %d, LinkIn dest: %d \n", (ptr)->linkin.uniPipeInfo.physIdSrc, (ptr)->linkin.uniPipeInfo.physIdDst);
       ptr = (ptr)->next;
-   printf("\n");
+      printf("\n");
    }
    printf("\n");
 }
@@ -115,35 +115,35 @@ void TestIterate(switchLinks ** head)
 //This is just drive code for testing purposes
 int main()
 {
-   LinkInfo l_i;
-   LinkInfo l_o;
-   
-   LinkInfo l_i2;
-   LinkInfo l_o2;
-   
-   l_i.linkType = UNIPIPE;
-   l_i.linkID = 0;
-   l_i.uniPipeInfo.pipeType = NONBLOCKING;
+LinkInfo l_i;
+LinkInfo l_o;
 
-   l_o.linkType = UNIPIPE;
-   l_o.linkID = 1;
-   l_o.uniPipeInfo.pipeType = NONBLOCKING;
+LinkInfo l_i2;
+LinkInfo l_o2;
 
-   l_i2.linkType = UNIPIPE;
-   l_i2.linkID = 3;
-   l_i2.uniPipeInfo.pipeType = NONBLOCKING;
+l_i.linkType = UNIPIPE;
+l_i.linkID = 0;
+l_i.uniPipeInfo.pipeType = NONBLOCKING;
 
-   l_o2.linkType = UNIPIPE;
-   l_o2.linkID = 4;
-   l_o2.uniPipeInfo.pipeType = NONBLOCKING;
+l_o.linkType = UNIPIPE;
+l_o.linkID = 1;
+l_o.uniPipeInfo.pipeType = NONBLOCKING;
 
-   switchLinks * header = constructLink(l_i,l_o, 1);
-   switchLinks * test = constructLink(l_i2,l_o2, 1);
-   addLink(&header, test);
-   TestIterate(&header);
-   
-   LinkInfo * tester = outputLink(&header, 4);
-   printf("Tester: %d \n", tester->linkID);
+l_i2.linkType = UNIPIPE;
+l_i2.linkID = 3;
+l_i2.uniPipeInfo.pipeType = NONBLOCKING;
+
+l_o2.linkType = UNIPIPE;
+l_o2.linkID = 4;
+l_o2.uniPipeInfo.pipeType = NONBLOCKING;
+
+switchLinks * header = constructLink(l_i,l_o, 1);
+switchLinks * test = constructLink(l_i2,l_o2, 1);
+addLink(&header, test);
+TestIterate(&header);
+
+LinkInfo * tester = outputLink(&header, 4);
+printf("Tester: %d \n", tester->linkID);
 
 
 }*/

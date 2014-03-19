@@ -116,9 +116,10 @@ void switchSendPacketBuff(switchState * sstate)
 }
 
 void scanAllLinks(switchState * sstate, packetBuffer *buff)
-{
+{  
    switchLinks * ptr = sstate->sLinks;
    while(ptr != NULL){
+      //Check something is being sent through link
       linkReceive(&(ptr->linkin), buff);
       switchRecvPacketBuff(sstate, ptr->linkin.linkID, buff);
       ptr = ptr->next;
@@ -133,11 +134,9 @@ void switchSetLinkHead(switchState * sstate, switchLinks * head)
 void switchMain(switchState * sstate)
 {
    packetBuffer tmpbuff; 
-//   while(1){
-  //    scanAllLinks(sstate, &tmpbuff); 
-    //  switchSendPacketBuff(sstate);
-      //does the switch sleep? 
-//      usleep(TENMILLISEC);  
-  // }
+   while(1){
+      scanAllLinks(sstate, &tmpbuff); 
+      switchSendPacketBuff(sstate);
+   }
 }
 
