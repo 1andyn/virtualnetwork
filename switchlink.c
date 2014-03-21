@@ -20,11 +20,11 @@ switchLinks * constructLink(LinkInfo in, LinkInfo out)
 switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head)
 {
    int i,y;
-   for(i = 0; i < NUMLINKS; i++){
+   for(i = 0; i < linkArray->numlinks; i++){
       if(linkArray->link[i].uniPipeInfo.physIdSrc == switchID){
          LinkInfo out = linkArray->link[i];
          int corr_dest = linkArray->link[i].uniPipeInfo.physIdDst;
-         for(y = 0; y < NUMLINKS; y++) {
+         for(y = 0; y < linkArray->numlinks; y++) {
             if(linkArray->link[y].uniPipeInfo.physIdSrc == corr_dest){
                LinkInfo in = linkArray->link[y];
                if(head == NULL) {
@@ -60,6 +60,7 @@ void addLink(switchLinks ** head, switchLinks * newlink)
 }
 
 //Returns Outlink
+//IN_ID = linkID of INPUT LINK
 LinkInfo * linkSearch(switchLinks ** head, int in_id)
 {
    /*Recursive Search*/
@@ -68,7 +69,7 @@ LinkInfo * linkSearch(switchLinks ** head, int in_id)
       return NULL;
    } else {
       index = *head;
-      if(index->linkin.linkID= in_id){
+      if(index->linkin.linkID == in_id){
          return &(index->linkout);
       } else {
          return linkSearch(&(index->next), in_id);
@@ -85,10 +86,10 @@ LinkInfo * outputLink(switchLinks ** head, int out_id)
       return NULL;
    } else {
       index = *head;
-      if(index->linkout.linkID= out_id){
+      if(index->linkout.linkID == out_id){
          return &(index->linkout);
       } else {
-         return linkSearch(&(index->next), out_id);
+         return outputLink(&(index->next), out_id);
       }
    }
 }
@@ -111,39 +112,63 @@ void TestIterate(switchLinks ** head)
    printf("\n");
 }
 
+void InlinkIterate(switchLinks ** head)
+{
+   printf("\n");
+   switchLinks * ptr = *head;
+   while(ptr != NULL) {
+      printf("LinkIn ID: %d,\n", (ptr)->linkin.linkID);
+      printf("LinkIn src: %d, LinkIn dest: %d \n", (ptr)->linkin.uniPipeInfo.physIdSrc, (ptr)->linkin.uniPipeInfo.physIdDst);
+      ptr = (ptr)->next;
+      printf("\n");
+   }
+   printf("\n");
+}
 /*
 //This is just drive code for testing purposes
 int main()
 {
-LinkInfo l_i;
-LinkInfo l_o;
+   LinkInfo l_i;
+   LinkInfo l_o;
 
-LinkInfo l_i2;
-LinkInfo l_o2;
+   LinkInfo l_i2;
+   LinkInfo l_o2;
 
-l_i.linkType = UNIPIPE;
-l_i.linkID = 0;
-l_i.uniPipeInfo.pipeType = NONBLOCKING;
+   l_i.linkType = UNIPIPE;
+   l_i.linkID = 0;
+   l_i.uniPipeInfo.pipeType = NONBLOCKING;
+   l_i.uniPipeInfo.physIdDst = 1;
+   l_i.uniPipeInfo.physIdSrc = 0;
 
-l_o.linkType = UNIPIPE;
-l_o.linkID = 1;
-l_o.uniPipeInfo.pipeType = NONBLOCKING;
+   l_o.linkType = UNIPIPE;
+   l_o.linkID = 1;
+   l_o.uniPipeInfo.pipeType = NONBLOCKING;
+   l_o.uniPipeInfo.physIdDst = 0;
+   l_o.uniPipeInfo.physIdSrc = 1;
 
-l_i2.linkType = UNIPIPE;
-l_i2.linkID = 3;
-l_i2.uniPipeInfo.pipeType = NONBLOCKING;
-
-l_o2.linkType = UNIPIPE;
-l_o2.linkID = 4;
-l_o2.uniPipeInfo.pipeType = NONBLOCKING;
-
-switchLinks * header = constructLink(l_i,l_o, 1);
-switchLinks * test = constructLink(l_i2,l_o2, 1);
-addLink(&header, test);
-TestIterate(&header);
-
-LinkInfo * tester = outputLink(&header, 4);
-printf("Tester: %d \n", tester->linkID);
+   l_i2.linkType = UNIPIPE;
+   l_i2.linkID = 3;
+   l_i2.uniPipeInfo.pipeType = NONBLOCKING;
+   l_i2.uniPipeInfo.physIdDst = 2;
+   l_i2.uniPipeInfo.physIdSrc = 3;
 
 
+   l_o2.linkType = UNIPIPE;
+   l_o2.linkID = 4;
+   l_o2.uniPipeInfo.pipeType = NONBLOCKING;
+   l_o2.uniPipeInfo.physIdDst = 3;
+   l_o2.uniPipeInfo.physIdSrc = 2;
+
+   switchLinks * header = constructLink(l_i,l_o);
+   switchLinks * test = constructLink(l_i2,l_o2);
+   addLink(&header, test);
+   TestIterate(&header);
+
+   LinkInfo * tester = outputLink(&header, 4);
+   printf("Tester: %d \n", tester->linkID);
+
+   LinkInfo * searcher = linkSearch(&header,0);
+   if(searcher == NULL){
+      printf("something wrong happened \n");
+   }
 }*/

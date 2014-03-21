@@ -212,7 +212,6 @@ appendWithSpace(sendbuff, word);
  * and the second byte is the low order bits.
  */
 
-
 for (k = 0; k < pbuff->length; k++) {
    lowbits = pbuff->payload[k];
    highbits = lowbits;

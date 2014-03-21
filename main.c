@@ -55,7 +55,7 @@ netCreateLinks(& linkArray);
 netSetNetworkTopology(& linkArray);
 
 /* Create nodes and spawn their own processes, one process per node */ 
-for (physid = 0; physid < NUMHOSTS + 1; physid++) {
+for (physid = 0; physid < NUMHOSTS; physid++) {
 
    pid = fork();
    if (pid == -1) {
@@ -63,41 +63,46 @@ for (physid = 0; physid < NUMHOSTS + 1; physid++) {
       return;
    }
    else if (pid == 0) { /* The child process -- a host node */
-      if(physid == NUMHOSTS){
-         switchInitState(&sstate, physid);
-         sstate.sLinks = getswitchLinks(&linkArray, physid, sstate.sLinks);
-         netCloseHostOtherLinks(&linkArray, physid); 
-         switchMain(&sstate);
-      } else {
-         hostInit(&hstate, physid); /* Initialize host's state */
+      hostInit(&hstate, physid); /* Initialize host's state */
 
-         /* Initialize the connection to the manager */ 
-         hstate.manLink = manLinkArray.link[physid];
+      /* Initialize the connection to the manager */ 
+      hstate.manLink = manLinkArray.link[physid];
 
-         /* 
-          * Close all connections not connect to the host
-          * Also close the manager's side of connections to host
-          */
-         netCloseConnections(& manLinkArray, physid);
-         
-         /* Initialize the host's incident communication links */
-         k = netHostOutLink(&linkArray, physid); /* Host's outgoing link */
-         hstate.linkout = linkArray.link[k];
+      /* 
+       * Close all connections not connect to the host
+       * Also close the manager's side of connections to host
+       */
+      netCloseConnections(& manLinkArray, physid);
+      
+      /* Initialize the host's incident communication links */
+      k = netHostOutLink(&linkArray, physid); /* Host's outgoing link */
+      hstate.linkout = linkArray.link[k];
 
-         k = netHostInLink(&linkArray, physid); /* Host's incoming link */
-         hstate.linkin = linkArray.link[k];
+      k = netHostInLink(&linkArray, physid); /* Host's incoming link */
+      hstate.linkin = linkArray.link[k];
 
-         /* Set Neighbor Address */
-         hstate.nbraddr = hstate.linkin.uniPipeInfo.physIdSrc;
+      /* Close all other links -- not connected to the host */
+      //netCloseHostOtherLinks(& linkArray, physid);
 
-         /* Close all other links -- not connected to the host */
-         netCloseHostOtherLinks(& linkArray, physid);
-
-         /* Go to the main loop of the host node */
-         hostMain(&hstate);
-      }
+      /* Go to the main loop of the host node */
+      hostMain(&hstate);
    } 
 }
+
+   //Test Switch Code
+   pid = fork();
+   if(pid == -1) {
+      printf("Error occured forking for switch \n");
+   } else if (pid == 0) {
+      switchInitState(&sstate, 3);
+      sstate.sLinks = getswitchLinks(&linkArray, 3, sstate.sLinks);
+      netCloseHostOtherLinks(&linkArray, 3); 
+      //TestIterate(&sstate.sLinks);
+      //InlinkIterate(&sstate.sLinks);
+      switchMain(&sstate);
+   }
+
+
 /* 
  * The manager is connected to the hosts and doesn't
  * need the links between nodes
