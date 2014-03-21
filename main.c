@@ -82,7 +82,7 @@ for (physid = 0; physid < NUMHOSTS; physid++) {
       hstate.linkin = linkArray.link[k];
 
       /* Close all other links -- not connected to the host */
-      //netCloseHostOtherLinks(& linkArray, physid);
+      netCloseHostOtherLinks(& linkArray, physid);
 
       /* Go to the main loop of the host node */
       hostMain(&hstate);

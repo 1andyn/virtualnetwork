@@ -46,7 +46,6 @@ packetBuffer * front(const PacketQueue * pq)
       return NULL;
    }
 }
-
 /*
 void TestIterate(const PacketQueue * pq)
 {
@@ -56,7 +55,6 @@ void TestIterate(const PacketQueue * pq)
       ptrptr = ptrptr->next;
    }
 }*/
-
 int isEmpty(const PacketQueue *pq)
 {
    if(pq->head == NULL) {
@@ -75,10 +73,8 @@ void deQueue(PacketQueue * pq)
    }
 }
 
-
-
-//This is just driver code for testing purposes
 /*
+//This is just driver code for testing purposes
 int main()
 {
    packetBuffer temp;
@@ -111,7 +107,7 @@ int main()
    PacketQueue * queue = NULL;
    queue = createQueue();
    
-   if(IsEmpty(queue)){
+   if(isEmpty(queue)){
       printf("Queue is currently empty. \n");
    }
 
@@ -130,7 +126,7 @@ int main()
    enQueue(queue, temp3);
  
    printf("Enqueued some packets...\n"); 
-   if(!IsEmpty(queue)){
+   if(!isEmpty(queue)){
       printf("Queue is NOT currently empty. \n");
    }
 
@@ -161,24 +157,42 @@ int main()
    printf("Popped top, new iteration: \n");
    TestIterate(queue);
    
-   if(IsEmpty(queue)){
+   if(isEmpty(queue)){
       printf("Queue is currently empty. \n");
    }
-  
   
    enQueue(queue, temp);
    enQueue(queue, temp2);
    enQueue(queue, temp3);
  
    printf("Enqueued some packets...\n"); 
-   if(!IsEmpty(queue)){
+   if(!isEmpty(queue)){
       printf("Queue is NOT currently empty. \n");
    }
 
    printf("Final Iteration: \n"); 
+
    TestIterate(queue);
-  
+   deQueue(queue);
+
+
+   printf("------------ \n"); 
+   TestIterate(queue);
+   deQueue(queue);
+
+   printf("------------ \n"); 
+   TestIterate(queue);
+   deQueue(queue);
    
+   printf("------------ \n"); 
+   TestIterate(queue);
+   deQueue(queue);
+
+   printf("------------ \n"); 
+   TestIterate(queue);
+   deQueue(queue);
+
 }
 */
+
 
