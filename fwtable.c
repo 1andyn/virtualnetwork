@@ -78,6 +78,26 @@ void fwTableIterate(FWTable ** head)
    }
 }
 
+
+void debugtable(FWTable ** head)
+{
+   FILE * write = fopen("Table.txt", "a");
+   FWTable * iterate = *head;
+
+   if(!write){
+      printf("something wrong happened \n");
+   } else {
+      fprintf(write,"----------\n");
+      while(iterate != NULL){
+         fprintf(write,"Addr: %d Link:%d Valid:%d \n", (iterate)->dest_addr,
+         (iterate)->out_link, (iterate)->valid);
+         iterate = (iterate)->next;
+      }
+      fprintf(write,"----------\n");
+      fclose(write);
+   }
+}
+
 /*
 //This is just driver code for testing purposes
 int main()

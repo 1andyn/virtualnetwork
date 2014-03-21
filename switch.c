@@ -52,7 +52,9 @@ void debug(int stage)
    if(!file) {
       printf("Cant open \n");
    } else {
+      fprintf(file, "-----\n");
       fprintf(file, "Stage %d \n", stage);
+      fprintf(file, "-----\n");
       fclose(file);
    }
 }
@@ -93,7 +95,7 @@ void switchRecvPacketBuff(switchState * sstate, int in_id, packetBuffer * pbuff)
       return;
    }
    int outlink = out->linkID;
-
+   debug(outlink);
    /* Update table entry */
    /* First Case Table is Empty */
    if(sstate->ftable == NULL){
@@ -122,6 +124,7 @@ void switchSendAll(switchState * sstate, int src, packetBuffer * recv)
       }
       ptr = ptr->next;
    }
+   debugtable(&(sstate->ftable));
    deQueue(sstate->recvPQ); //Pop top after sending
 }
 
