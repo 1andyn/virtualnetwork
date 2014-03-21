@@ -124,7 +124,6 @@ void switchSendAll(switchState * sstate, int src, packetBuffer * recv)
       }
       ptr = ptr->next;
    }
-   debugtable(&(sstate->ftable));
    deQueue(sstate->recvPQ); //Pop top after sending
 }
 
@@ -147,6 +146,7 @@ void switchSendPacketBuff(switchState * sstate)
       linkSend(out, temp);
       deQueue(sstate->recvPQ); //Pop top after sending
    }
+   debugtable(&(sstate->ftable));
 }
 
 void scanAllLinks(switchState * sstate, packetBuffer * pb)

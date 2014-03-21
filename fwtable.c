@@ -124,7 +124,12 @@ int main()
 
    printf("Corresponding outlink to dest 0 is %d \n", linkDestSearch(&head,0)); 
    
+   printf("Corresponding outlink to dest 0 is %d \n", linkDestSearch(&head,9)); 
    
-   FWTable ** sch = fwTableSearch(&head, 2);
+   FWTable ** sch = fwTableSearch(&head, 3);
    printf("Found: %d as link number,\n",(*sch)->out_link);
+   sch = fwTableSearch(&head,9);
+   if(sch != NULL){
+      printf("null pointer",(*sch)->out_link);
+   }
 }*/
