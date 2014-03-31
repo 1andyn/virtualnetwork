@@ -1,8 +1,7 @@
-#University of Hawaii
-#EE 367 Lab
-
 #Network Simulator Project
-##Team Members:
+##University of Hawaii, EE367 Lab
+
+###Team Members:
 - Dee Mosher
 - Nathaniel Saul
 - Andy Ng
