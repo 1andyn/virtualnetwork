@@ -181,11 +181,11 @@ int initializeTop(Topo *topology)
       }
    }
 }
-
+/*
 int main()
 {
    Topo top;
    initTopo(&top);
    initializeTop(&top);
-}
+}*/
 
