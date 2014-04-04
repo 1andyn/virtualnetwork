@@ -7,5 +7,6 @@ typedef struct {
    int link[ABSOLUTE_MAX];
 } topo;
 
-void initializeTop();
+void initializeTop(topo *topology);
+void initTopo(topo *topology);
 
