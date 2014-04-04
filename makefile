@@ -34,4 +34,4 @@ switchlink.o: switchlink.c
 	gcc -c switchlink.c
 
 clean:
-	rm -rf *o net367 pkqueue switch switchlink fwtable
+	rm -rf *o net367 pkqueue switch switchlink fwtable top

@@ -1,12 +1,9 @@
+#define ABSOLUTE_MAX 100
+
 typedef struct {
    int numlinks;
    int numhosts;
    int type;
-   struct link_container *head;
+   int link[ABSOLUTE_MAX];
 } topo;
 
-typedef struct {
-   int in;
-   int out;
-   struct link_container *next;
-} link_container;
