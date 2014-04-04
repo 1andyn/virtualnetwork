@@ -15,4 +15,4 @@ void addLink(switchLinks ** head, switchLinks * newlink);
 
 void InlinkIterate(switchLinks ** head);
 void TestIterate(switchLinks ** head);
-switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head);
+void getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head);

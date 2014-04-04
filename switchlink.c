@@ -17,7 +17,7 @@ switchLinks * constructLink(LinkInfo in, LinkInfo out)
 }
 
 
-switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head)
+void getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head)
 {
    int i,y;
    for(i = 0; i < linkArray->numlinks; i++){
@@ -33,14 +33,12 @@ switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLink
                if(head == NULL) {
                
                   head = constructLink(in, out);
-                  break;
                
                } else {
                
                   switchLinks * newlink = constructLink(in, out);
                   addLink(&head, newlink);
                
-                  break;
                }
 
             }
@@ -49,7 +47,6 @@ switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLink
 
       }
    }
-   return head; 
 }
 
 void addLink(switchLinks ** head, switchLinks * newlink)
