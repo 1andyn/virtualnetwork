@@ -13,32 +13,27 @@ switchLinks * constructLink(LinkInfo in, LinkInfo out)
    head = (switchLinks *) malloc(sizeof(switchLinks));
    head->linkin = in;
    head->linkout = out;
+   head->next = NULL;
    return head;
 }
 
 
-void getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head)
+switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head)
 {
+   
    int i,y;
    for(i = 0; i < linkArray->numlinks; i++){
       if(linkArray->link[i].uniPipeInfo.physIdSrc == switchID) {
-         
          LinkInfo out = linkArray->link[i];
          int corr_dest = linkArray->link[i].uniPipeInfo.physIdDst;
-
          for(y = 0; y < linkArray->numlinks; y++) {
             if(linkArray->link[y].uniPipeInfo.physIdSrc == corr_dest) {
-
                LinkInfo in = linkArray->link[y];
                if(head == NULL) {
-               
                   head = constructLink(in, out);
-               
                } else {
-               
                   switchLinks * newlink = constructLink(in, out);
                   addLink(&head, newlink);
-               
                }
 
             }
@@ -47,22 +42,27 @@ void getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head)
 
       }
    }
+   return head;
 }
 
 void addLink(switchLinks ** head, switchLinks * newlink)
 {
+
    /* Recursive Insertion */
    switchLinks * indexptr;
-   if(head == NULL){
+
+   if(*head == NULL){
       printf("Something went wrong attempting to add new link");
       return;
    } else {
       indexptr = * head;
-      if(indexptr == NULL) {
-         *head = newlink;
-      } else {
-         addLink(&(indexptr->next), newlink);
+
+      while(indexptr->next != NULL) {
+         indexptr = indexptr->next;
       }
+      
+      indexptr->next = newlink;
+      return;
    }
 }
 
@@ -103,20 +103,24 @@ LinkInfo * outputLink(switchLinks ** head, int out_id)
 
 void TestIterate(switchLinks ** head)
 {
-
-   printf("\n");
+   
    switchLinks * ptr = *head;
-   while(ptr != NULL) {
-      printf("LinkOut ID: %d \n", (ptr)->linkout.linkID); 
-      printf("LinkOut src: %d, LinkOut dest: %d \n", (ptr)->linkout.uniPipeInfo.physIdSrc, (ptr)->linkout.uniPipeInfo.physIdDst);
-
-
-      printf("LinkIn ID: %d,\n", (ptr)->linkin.linkID);
-      printf("LinkIn src: %d, LinkIn dest: %d \n", (ptr)->linkin.uniPipeInfo.physIdSrc, (ptr)->linkin.uniPipeInfo.physIdDst);
-      ptr = (ptr)->next;
-      printf("\n");
+   if(ptr == NULL) {
+      FILE * data = fopen("bugger", "a");
+      fprintf(data, "Something went wrong");
+      fclose(data);
+   
    }
-   printf("\n");
+   while(ptr != NULL) {
+      FILE * data = fopen("tester", "a");
+      fprintf(data, "Link ID %d \n", (ptr)->linkout.linkID);
+      fprintf(data, "LinkOut src: %d, LinkOut dest: %d \n", (ptr)->linkout.uniPipeInfo.physIdSrc, (ptr)->linkout.uniPipeInfo.physIdDst);
+      fprintf(data, "LinkIn ID: %d,\n", (ptr)->linkin.linkID);
+      fprintf(data, "LinkIn src: %d, LinkIn dest: %d \n", (ptr)->linkin.uniPipeInfo.physIdSrc, (ptr)->linkin.uniPipeInfo.physIdDst);
+      fprintf(data, "\n");
+      fclose(data);
+      ptr = (ptr)->next;
+   }
 }
 
 void InlinkIterate(switchLinks ** head)

@@ -58,7 +58,6 @@ netSetNetworkTopology(&top, & linkArray);
 
 /* Create nodes and spawn their own processes, one process per node */ 
 for (physid = 0; physid < top.numhosts; physid++) {
-   printf("phs: %d \n", physid);
    pid = fork();
    if (pid == -1) {
       printf("Error:  the fork() failed\n");
@@ -69,7 +68,6 @@ for (physid = 0; physid < top.numhosts; physid++) {
 
       /* Initialize the connection to the manager */ 
       hstate.manLink = manLinkArray.link[physid];
-
       /* 
        * Close all connections not connect to the host
        * Also close the manager's side of connections to host
@@ -77,6 +75,7 @@ for (physid = 0; physid < top.numhosts; physid++) {
       netCloseConnections(& manLinkArray, physid);
       
       /* Initialize the host's incident communication links */
+      
       k = netHostOutLink(&linkArray, physid); /* Host's outgoing link */
       hstate.linkout = linkArray.link[k];
 
@@ -93,13 +92,12 @@ for (physid = 0; physid < top.numhosts; physid++) {
 
 int sw_end_addr = top.numhosts + top.numswitch;
 for(physid = top.numhosts; physid < sw_end_addr; physid++){
-   printf("phs: %d \n", physid);
    pid = fork();
    if(pid == -1) {
       printf("Error occured forking for switch \n");
    } else if (pid == 0) {
       switchInitState(&sstate, physid);
-      getswitchLinks(&linkArray, physid, sstate.sLinks);
+      sstate.sLinks = getswitchLinks(&linkArray, physid, sstate.sLinks);
       TestIterate(&sstate.sLinks);
       netCloseHostOtherLinks(&linkArray, physid);
       switchMain(&sstate);

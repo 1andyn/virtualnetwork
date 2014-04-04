@@ -127,10 +127,13 @@ void netSetNetworkTopology(Topo *top, linkArrayType * linkArray)
 {
    int x;
    for(x = 0; x < (top->numlinks)*3; x = x+3) {
-      linkArray->link[top->link[x]].uniPipeInfo.physIdSrc = top->link[x+1];
-      linkArray->link[top->link[x]].uniPipeInfo.physIdDst = top->link[x+2];
-      //printf("ID: %d \n", top->link[x]);
-      //printf("SRC: %d, DEST %d \n", top->link[x+1], top->link[x+2]);
+      int i = top->link[x];
+      int j = top->link[x+1];
+      int k = top->link[x+2];
+      linkArray->link[i].uniPipeInfo.physIdSrc = j;
+      linkArray->link[i].uniPipeInfo.physIdDst = k;
+      printf("ID: %d \n", top->link[x]);
+      printf("SRC: %d, DEST %d \n", top->link[x+1], top->link[x+2]);
    }
 }
 
