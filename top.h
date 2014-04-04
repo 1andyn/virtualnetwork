@@ -3,6 +3,7 @@
 typedef struct {
    int numlinks;
    int numhosts;
+   int numswitch;
    int type;
    int link[ABSOLUTE_MAX];
 } Topo;

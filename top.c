@@ -7,7 +7,7 @@
 #define TREE 1
 #define FAIL -1
 #define SUCCESS 1
-#define FILENAMESIZE 100
+#define FILENAMEMAX 100
 
 //Defaults (No Longer Needed)
 #define TREE_SIZE 4
@@ -31,7 +31,7 @@ void removeNewLine(char *line){
    line[strcspn (line, "\n")] = '\0';
 }
 
-void initTreeData(char file[], Topo *top)
+void initTreeData(char *file, Topo *top)
 { 
    char *linebuff = NULL; 
    size_t length = 0;
@@ -40,7 +40,7 @@ void initTreeData(char file[], Topo *top)
    printf("[TREE] Topology detected.\n");
 }
 
-void initStarData(char file[], Topo *top)
+void initStarData(char *file, Topo *top)
 {
    char *linebuff = NULL; 
    size_t length = 0;
@@ -81,7 +81,7 @@ void initStarData(char file[], Topo *top)
 
 int initializeTop(Topo *topology)
 {
-   char filename[] = "";
+   char filename[FILENAMEMAX];
    char *linebuff = NULL; 
    size_t length = 0;
    ssize_t linesize;
