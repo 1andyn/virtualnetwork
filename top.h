@@ -7,3 +7,5 @@ typedef struct {
    int link[ABSOLUTE_MAX];
 } topo;
 
+void initializeTop();
+
