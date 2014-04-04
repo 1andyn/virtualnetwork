@@ -1,4 +1,4 @@
-#define NUMHOSTS 3
+#define NUMHOSTS 20 
 
 typedef struct{ /* Connection used by the manager to a host */ 
    int toHost[2]; /* Pipe link to host */

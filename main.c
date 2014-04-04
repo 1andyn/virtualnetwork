@@ -92,7 +92,7 @@ for (physid = 0; physid < top.numhosts; physid++) {
 }
 
 int sw_end_addr = top.numhosts + top.numswitch;
-for(physid = top.numhosts; physid < sw_end_addr; physid++){
+for( physid = top.numhosts; physid < sw_end_addr; physid++ ){
    pid = fork();
    if(pid == -1) {
       printf("Error occured forking for switch \n");

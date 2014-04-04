@@ -59,6 +59,25 @@ void debug(int stage)
    }
 }
 
+void writeSlinks(switchState *s)
+{
+   FILE * file = fopen("tester", "a");
+   if(!file) {
+      printf("Cant open \n");
+   } else {
+      switchLinks *ptr = s->sLinks;
+      while(ptr != NULL)
+      {
+         fprintf(file, "LINKOUT ID: %d \n", ptr->linkout.linkID);
+         fprintf(file, "LINKOUT SRC: %d, LINKOUT DEST: %d \n,", ptr->linkout.uniPipeInfo.physIdSrc, ptr->linkout.uniPipeInfo.physIdDst);
+         fprintf(file, "LINKIN ID: %d \n", ptr->linkin.linkID);
+         fprintf(file, "LINKIN SRC: %d, LINKIN DEST: %d \n,", ptr->linkin.uniPipeInfo.physIdSrc, ptr->linkin.uniPipeInfo.physIdDst);
+         ptr = ptr->next;
+      }
+      fclose(file);
+   }
+}
+
 void debug3(int stage)
 {
    FILE * file = fopen("Sending", "a");
