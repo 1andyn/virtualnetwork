@@ -33,7 +33,6 @@ manLinkArrayType manLinkArray;
 Topo top;
 initTopo(&top);
 initializeTop(&top);
-
 /* Intialie Switch Links to NULL */
 sstate.sLinks = NULL;
 
@@ -46,20 +45,23 @@ int k;
  * Create nonblocking (pipes) between manager and hosts 
  * assuming that hosts have physical IDs 0, 1, ... 
  */
-manLinkArray.numlinks = NUMHOSTS;
+printf("%d \n", top.numhosts);
+manLinkArray.numlinks = top.numhosts;
 netCreateConnections(& manLinkArray);
 
 /* Create links between nodes but not setting their end nodes */
 
-linkArray.numlinks = NUMLINKS;
+
+printf("%d \n", top.numlinks);
+linkArray.numlinks = top.numlinks;
 netCreateLinks(& linkArray);
 
-/* Set the end nodes of the links */
 
+/* Set the end nodes of the links */
 netSetNetworkTopology(&top, & linkArray);
 
 /* Create nodes and spawn their own processes, one process per node */ 
-for (physid = 0; physid < NUMHOSTS; physid++) {
+for (physid = 0; physid < top.numhosts; physid++) {
 
    pid = fork();
    if (pid == -1) {
@@ -92,17 +94,20 @@ for (physid = 0; physid < NUMHOSTS; physid++) {
       hostMain(&hstate);
    } 
 }
-
+printf("Here");
+int sw_end_addr = top.numhosts + top.numswitch;
+for(physid = top.numhosts; physid < sw_end_addr; physid++){
    //Test Switch Code
    pid = fork();
    if(pid == -1) {
       printf("Error occured forking for switch \n");
    } else if (pid == 0) {
-      switchInitState(&sstate, 3);
-      sstate.sLinks = getswitchLinks(&linkArray, 3, sstate.sLinks);
-      netCloseHostOtherLinks(&linkArray, 3); 
+      switchInitState(&sstate, physid);
+      sstate.sLinks = getswitchLinks(&linkArray, physid, sstate.sLinks);
+      netCloseHostOtherLinks(&linkArray, physid); 
       switchMain(&sstate);
    }
+}
 
 
 /* 
