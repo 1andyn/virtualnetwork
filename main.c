@@ -45,17 +45,13 @@ int k;
  * Create nonblocking (pipes) between manager and hosts 
  * assuming that hosts have physical IDs 0, 1, ... 
  */
-printf("%d \n", top.numhosts);
 manLinkArray.numlinks = top.numhosts;
 netCreateConnections(& manLinkArray);
 
 /* Create links between nodes but not setting their end nodes */
 
-
-printf("%d \n", top.numlinks);
 linkArray.numlinks = top.numlinks;
 netCreateLinks(& linkArray);
-
 
 /* Set the end nodes of the links */
 netSetNetworkTopology(&top, & linkArray);
@@ -94,17 +90,16 @@ for (physid = 0; physid < top.numhosts; physid++) {
       hostMain(&hstate);
    } 
 }
-printf("Here");
+
 int sw_end_addr = top.numhosts + top.numswitch;
 for(physid = top.numhosts; physid < sw_end_addr; physid++){
-   //Test Switch Code
    pid = fork();
    if(pid == -1) {
       printf("Error occured forking for switch \n");
    } else if (pid == 0) {
       switchInitState(&sstate, physid);
       sstate.sLinks = getswitchLinks(&linkArray, physid, sstate.sLinks);
-      netCloseHostOtherLinks(&linkArray, physid); 
+      netCloseHostOtherLinks(&linkArray, physid);
       switchMain(&sstate);
    }
 }

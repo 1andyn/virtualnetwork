@@ -126,10 +126,11 @@ close(manLinkArray->link[hostid].toHost[PIPEWRITE]);
 void netSetNetworkTopology(Topo *top, linkArrayType * linkArray)
 {
    int x;
-   for(x = 0; x < (top->numlinks)*3; x+3) {
+   for(x = 0; x < (top->numlinks)*3; x = x+3) {
       linkArray->link[top->link[x]].uniPipeInfo.physIdSrc = top->link[x+1];
       linkArray->link[top->link[x]].uniPipeInfo.physIdDst = top->link[x+2];
-      printf("you are in here");
+      printf("ID: %d \n", top->link[x]);
+      printf("SRC: %d, DEST %d \n", top->link[x+1], top->link[x+2]);
    }
 }
 
