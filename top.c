@@ -27,6 +27,14 @@ void initTopo(Topo *topology)
    topology->type = -1;
 }
 
+void iterateLink(Topo * top)
+{
+   int x;
+   for(x = 0; x < (top->numlinks*3); x++) {
+      printf("%d \n", top->link[x]);
+   }
+}
+
 void removeNewLine(char *line){
    line[strcspn (line, "\n")] = '\0';
 }
@@ -38,7 +46,51 @@ void initTreeData(char *file, Topo *top)
    ssize_t linesize;
    
    printf("[TREE] Topology detected.\n");
+
+   FILE *data = fopen(file,"r");
+   if(!data){
+      printf("Error: Something wrong occurred!");
+      return;
+   }
+   
+   /* First three lines are NOT Link Data*/
+   int index;
+   for(index = 0; index < 3; index++) {
+      linesize = getline(&linebuff, &length, data);
+      removeNewLine(linebuff);
+      if(linesize != -1){
+         int val = atoi(linebuff);
+         switch(index){
+         case 0: break;
+         case 1: 
+                 top->numhosts = val;
+                 printf("Number of hosts: %d \n", val);
+                 break; 
+         case 2:
+                 top->numswitch = val;
+                 printf("Number of switches: %d \n", val);
+                 break; 
+         }
+      } else {
+         printf("Something went wrong reading first three lines \n");
+         return;
+      }
+   }
+   
+   int count = 0; 
+   while((linesize = getline(&linebuff, &length, data)) != -1){
+      removeNewLine(linebuff);
+      int num = atoi(linebuff);
+      top->link[count] = num;
+      count++; // Increment Counter
+   }
+   int num_link = count / 3;
+   top->numlinks = num_link;
+   printf("Number of links: %d \n", num_link);
+   fclose(data);
+
 }
+
 
 void initStarData(char *file, Topo *top)
 {
@@ -76,6 +128,17 @@ void initStarData(char *file, Topo *top)
          return;
       }
    }
+   
+   int count = 0; 
+   while((linesize = getline(&linebuff, &length, data)) != -1){
+      removeNewLine(linebuff);
+      int num = atoi(linebuff);
+      top->link[count] = num;
+      count++; // Increment Counter
+   }
+   int num_link = count / 3;
+   top->numlinks = num_link;
+   printf("Number of links: %d \n", num_link);
    fclose(data);
 }
 
@@ -125,5 +188,4 @@ int main()
    initTopo(&top);
    initializeTop(&top);
 }
-
 
