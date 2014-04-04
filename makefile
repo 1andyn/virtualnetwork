@@ -1,7 +1,10 @@
 # Make file
 
-net367: host.o utilities.o link.o man.o main.o net.o switchlink.o switch.o pkqueue.o fwtable.o
-	gcc -o net367 host.o utilities.o link.o man.o main.o net.o switchlink.o switch.o pkqueue.o fwtable.o
+net367: host.o utilities.o link.o man.o main.o net.o switchlink.o switch.o pkqueue.o fwtable.o top.o
+	gcc -o net367 host.o utilities.o link.o man.o main.o net.o switchlink.o switch.o pkqueue.o fwtable.o top.o
+
+top.o: top.c
+	gcc -c top.c
 
 fwtable.o: fwtable.c
 	gcc -c fwtable.c

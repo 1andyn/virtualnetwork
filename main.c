@@ -8,6 +8,7 @@
 #include <fcntl.h>
 
 #include "main.h"
+#include "top.h"
 #include "utilities.h"
 #include "link.h"
 #include "man.h"
@@ -29,6 +30,9 @@ hostState hstate;             /* The host's state */
 switchState sstate;
 linkArrayType linkArray;
 manLinkArrayType manLinkArray;
+Topo top;
+initTopo(&top);
+initializeTop(&top);
 
 /* Intialie Switch Links to NULL */
 sstate.sLinks = NULL;
@@ -52,7 +56,7 @@ netCreateLinks(& linkArray);
 
 /* Set the end nodes of the links */
 
-netSetNetworkTopology(& linkArray);
+netSetNetworkTopology(&top, & linkArray);
 
 /* Create nodes and spawn their own processes, one process per node */ 
 for (physid = 0; physid < NUMHOSTS; physid++) {
@@ -97,8 +101,6 @@ for (physid = 0; physid < NUMHOSTS; physid++) {
       switchInitState(&sstate, 3);
       sstate.sLinks = getswitchLinks(&linkArray, 3, sstate.sLinks);
       netCloseHostOtherLinks(&linkArray, 3); 
-      //TestIterate(&sstate.sLinks);
-      //InlinkIterate(&sstate.sLinks);
       switchMain(&sstate);
    }
 
