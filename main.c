@@ -56,6 +56,8 @@ netCreateLinks(& linkArray);
 /* Set the end nodes of the links */
 netSetNetworkTopology(&top, & linkArray);
 
+int sw_end_addr = top.numhosts + top.numswitch;
+
 /* Create nodes and spawn their own processes, one process per node */ 
 for (physid = 0; physid < top.numhosts; physid++) {
 
@@ -83,7 +85,7 @@ for (physid = 0; physid < top.numhosts; physid++) {
       k = netHostInLink(&linkArray, physid); /* Host's incoming link */
       hstate.linkin = linkArray.link[k];
 
-      /* Close all other links -- not connected to the host */
+     /* Close all other links -- not connected to the host */
       netCloseHostOtherLinks(& linkArray, physid);
 
       /* Go to the main loop of the host node */
@@ -91,7 +93,6 @@ for (physid = 0; physid < top.numhosts; physid++) {
    } 
 }
 
-int sw_end_addr = top.numhosts + top.numswitch;
 for( physid = top.numhosts; physid < sw_end_addr; physid++ ){
    pid = fork();
    if(pid == -1) {
