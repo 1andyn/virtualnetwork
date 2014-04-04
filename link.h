@@ -1,7 +1,7 @@
 /* Definitions and prototypes for the link (link.c)
  */
 
-#define NUMLINKS 6
+#define NUMLINKS 16
 
 enum LinkType {UNIPIPE}; /* UNIPIPE = unidirectional pipe
                           * We can add more types later

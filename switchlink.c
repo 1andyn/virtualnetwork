@@ -23,6 +23,11 @@ switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLink
    
    int i,y;
    for(i = 0; i < linkArray->numlinks; i++){
+
+      FILE * data = fopen("slinks", "a");
+      fprintf(data, "Data: %d\n", i);
+      fclose(data);
+
       if(linkArray->link[i].uniPipeInfo.physIdSrc == switchID) {
          LinkInfo out = linkArray->link[i];
          int corr_dest = linkArray->link[i].uniPipeInfo.physIdDst;

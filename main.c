@@ -49,7 +49,7 @@ manLinkArray.numlinks = top.numhosts;
 netCreateConnections(& manLinkArray);
 
 /* Create links between nodes but not setting their end nodes */
-
+printf("%d \n", top.numlinks);
 linkArray.numlinks = top.numlinks;
 netCreateLinks(& linkArray);
 
