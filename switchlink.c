@@ -21,22 +21,32 @@ switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLink
 {
    int i,y;
    for(i = 0; i < linkArray->numlinks; i++){
-      if(linkArray->link[i].uniPipeInfo.physIdSrc == switchID){
+      if(linkArray->link[i].uniPipeInfo.physIdSrc == switchID) {
+         
          LinkInfo out = linkArray->link[i];
          int corr_dest = linkArray->link[i].uniPipeInfo.physIdDst;
+
          for(y = 0; y < linkArray->numlinks; y++) {
-            if(linkArray->link[y].uniPipeInfo.physIdSrc == corr_dest){
+            if(linkArray->link[y].uniPipeInfo.physIdSrc == corr_dest) {
+
                LinkInfo in = linkArray->link[y];
                if(head == NULL) {
+               
                   head = constructLink(in, out);
                   break;
+               
                } else {
+               
                   switchLinks * newlink = constructLink(in, out);
                   addLink(&head, newlink);
+               
                   break;
                }
+
             }
+
          }
+
       }
    }
    return head; 

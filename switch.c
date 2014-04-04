@@ -194,6 +194,7 @@ void switchMain(switchState * sstate)
    while(1){
       packetBuffer pb;
       scanAllLinks(sstate, &pb); 
+      
       if(!isEmpty(sstate->recvPQ)) {
          switchSendPacketBuff(sstate);
       }

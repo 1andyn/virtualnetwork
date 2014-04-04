@@ -58,6 +58,19 @@ netSetNetworkTopology(&top, & linkArray);
 
 int sw_end_addr = top.numhosts + top.numswitch;
 
+for(physid = top.numhosts; physid < sw_end_addr; physid++){
+   pid = fork();
+   if(pid == -1) {
+      printf("Error occured forking for switch \n");
+   } else if (pid == 0) {
+      switchInitState(&sstate, physid);
+      sstate.sLinks = getswitchLinks(&linkArray, physid, sstate.sLinks);
+      TestIterate(&sstate.sLinks);
+      netCloseHostOtherLinks(&linkArray, physid);
+      switchMain(&sstate);
+   }
+}
+
 /* Create nodes and spawn their own processes, one process per node */ 
 for (physid = 0; physid < top.numhosts; physid++) {
 
@@ -91,18 +104,6 @@ for (physid = 0; physid < top.numhosts; physid++) {
       /* Go to the main loop of the host node */
       hostMain(&hstate);
    } 
-}
-
-for( physid = top.numhosts; physid < sw_end_addr; physid++ ){
-   pid = fork();
-   if(pid == -1) {
-      printf("Error occured forking for switch \n");
-   } else if (pid == 0) {
-      switchInitState(&sstate, physid);
-      sstate.sLinks = getswitchLinks(&linkArray, physid, sstate.sLinks);
-      netCloseHostOtherLinks(&linkArray, physid);
-      switchMain(&sstate);
-   }
 }
 
 /* 
