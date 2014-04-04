@@ -5,8 +5,8 @@ typedef struct {
    int numhosts;
    int type;
    int link[ABSOLUTE_MAX];
-} topo;
+} Topo;
 
-void initializeTop(topo *topology);
-void initTopo(topo *topology);
+int initializeTop(Topo *topology);
+void initTopo(Topo *topology);
 

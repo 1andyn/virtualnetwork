@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "top.h"
 
 #define STAR 0
 #define TREE 1
@@ -16,21 +17,19 @@
 char tree_cmp[] = "tree";
 char star_cmp[] = "star";
 
-void initTopo(topo *topology)
+void initTopo(Topo *topology)
 {
    topology->numlinks = 0;
    topology->numhosts = 0;
    topology->type = -1;
 }
 
-void initTreeData(char file[])
-{
+void initTreeData(char file[], Topo *top)
+{ 
    printf("You are initing a tree!\n");
-   FILE *top = fopen(file,"r");
-   if(!file
 }
 
-void initStarData(char file[])
+void initStarData(char file[], Topo *top)
 {
    printf("You are initing a star!\n");
 }
@@ -39,7 +38,7 @@ void removeNewLine(char *line){
    line[strcspn (line, "\n")] = '\0';
 }
 
-int initializeTop(topo *topology)
+int initializeTop(Topo *topology)
 {
    char filename[] = "";
    char *linebuff = NULL; 
@@ -64,11 +63,11 @@ int initializeTop(topo *topology)
          if(strcmp(linebuff, tree_cmp) == 0) {
             //Remember to close file
             fclose(file);
-            initTreeData(filename);
+            initTreeData(filename, topology);
             return SUCCESS;
          } else if (strcmp(linebuff, star_cmp) == 0) {
             fclose(file);
-            initStarData(filename);
+            initStarData(filename, topology);
             return SUCCESS;
          } else {
             printf("Incorrect syntax detected..stopping.\n");
@@ -81,7 +80,9 @@ int initializeTop(topo *topology)
 
 int main()
 {
-   initializeTop();
+   Topo top;
+   initTopo(&top);
+   initializeTop(&top);
 }
 
 
