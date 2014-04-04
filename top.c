@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#define STAR 0
+#define TREE 1
 #define FAIL -1
 #define SUCCESS 1
 #define FILENAMESIZE 100
@@ -14,9 +16,18 @@
 char tree_cmp[] = "tree";
 char star_cmp[] = "star";
 
+void initTopo(topo *topology)
+{
+   topology->numlinks = 0;
+   topology->numhosts = 0;
+   topology->type = -1;
+}
+
 void initTreeData(char file[])
 {
    printf("You are initing a tree!\n");
+   FILE *top = fopen(file,"r");
+   if(!file
 }
 
 void initStarData(char file[])
@@ -24,9 +35,11 @@ void initStarData(char file[])
    printf("You are initing a star!\n");
 }
 
+void removeNewLine(char *line){
+   line[strcspn (line, "\n")] = '\0';
+}
 
-
-int initializeTop()
+int initializeTop(topo *topology)
 {
    char filename[] = "";
    char *linebuff = NULL; 
@@ -42,13 +55,12 @@ int initializeTop()
       return FAIL;
    } else {
       linesize = getline(&linebuff, &length, file);
+      removeNewLine(linebuff);
       if(linesize == -1) {
          printf("Incorrect syntax detected..stopping.\n");
          fclose(file);
          return FAIL;
       } else {
-         printf("%s", linebuff);
-         printf("%s", tree_cmp);
          if(strcmp(linebuff, tree_cmp) == 0) {
             //Remember to close file
             fclose(file);
