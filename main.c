@@ -104,7 +104,6 @@ for(physid = top.numhosts; physid < sw_end_addr; physid++){
    }
 }
 
-
 /* 
  * The manager is connected to the hosts and doesn't
  * need the links between nodes
