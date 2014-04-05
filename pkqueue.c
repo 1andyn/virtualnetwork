@@ -17,7 +17,7 @@ PacketQueue * createQueue()
    return queue;
 }
 
-void enQueue(PacketQueue * pq, packetBuffer rcv)
+void enQueue(PacketQueue * pq, packetBuffer rcv ,int source)
 {
    PKQueue * pkq = (PKQueue *) malloc(sizeof(PKQueue));
    if(pkq == NULL){
@@ -27,6 +27,7 @@ void enQueue(PacketQueue * pq, packetBuffer rcv)
       //Assign element Data
       pkq->rcvPKB = rcv;
       pkq->next = NULL;
+      pkq->link_source = source;
       
       //Head is empty
       if(pq->head == NULL) {
@@ -46,6 +47,16 @@ packetBuffer * front(const PacketQueue * pq)
       return NULL;
    }
 }
+
+int linksourcefront(const PacketQueue * pq)
+{
+   if(pq != NULL) {
+      return pq->head->link_source;
+   } else {
+      return -1;
+   }
+}
+
 /*
 void TestIterate(const PacketQueue * pq)
 {

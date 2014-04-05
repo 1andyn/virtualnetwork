@@ -3,6 +3,7 @@
  */
 
 typedef struct PKQueue {
+   int link_source;
    packetBuffer rcvPKB; //Stores Packetbuffers
    struct PKQueue * next;
 } PKQueue;
@@ -14,8 +15,9 @@ typedef struct PacketQueue{
 
 
 PacketQueue * createQueue();
-void enQueue(PacketQueue * pq, packetBuffer rcv);//Adds to Queue
+void enQueue(PacketQueue * pq, packetBuffer rcv, int source);//Adds to Queue
 void deQueue(PacketQueue * pq);
+int linksourcefront(const PacketQueue * pq);
 
 //Support Functions
 packetBuffer * front(const PacketQueue *pq);
