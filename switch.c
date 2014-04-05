@@ -48,35 +48,35 @@
 
 void debug(int stage)
 {
-   FILE * file = fopen("Receive", "a");
+   FILE * file = fopen("DEBUGFILE", "a");
    if(!file) {
       printf("Cant open \n");
    } else {
-      fprintf(file, "-----\n");
-      fprintf(file, "Stage %d \n", stage);
-      fprintf(file, "-----\n");
-      fclose(file);
-   }
-}
-
-void debug3(int stage)
-{
-   FILE * file = fopen("Sending", "a");
-   if(!file) {
-      printf("Cant open \n");
-   } else {
-      fprintf(file, "Stage %d \n", stage);
+      fprintf(file, "Src: %d \n", stage);
       fclose(file);
    }
 }
 
 void debug2(int stage)
 {
-   FILE * file = fopen("Sender", "a");
+   FILE * file = fopen("DEBUGFILE", "a");
    if(!file) {
       printf("Cant open \n");
    } else {
-      fprintf(file, "Stage %d \n", stage);
+      fprintf(file, "Dest: %d \n", stage);
+      fprintf(file, "-----\n");
+      fclose(file);
+   }
+}
+
+void debug3(int stage, int id)
+{
+   FILE * file = fopen("DEBUGFILE", "a");
+   if(!file) {
+      printf("Cant open \n");
+   } else {
+      fprintf(file, "HostID: %d \n", id);
+      fprintf(file, "LinkID Received from  %d \n", stage);
       fclose(file);
    }
 }
@@ -121,7 +121,6 @@ void switchRecvPacketBuff(switchState * sstate, int in_id, packetBuffer * pbuff)
       return;
    }
    int outlink = out->linkID;
-   debug(outlink);
    /* Update table entry */
    /* First Case Table is Empty */
    if(sstate->ftable == NULL){
@@ -136,7 +135,7 @@ void switchRecvPacketBuff(switchState * sstate, int in_id, packetBuffer * pbuff)
          fwTableAdd(&(sstate->ftable), fable);
       }
    }
-   enQueue((sstate->recvPQ), *pbuff);
+   enQueue((sstate->recvPQ), *pbuff, in_id);
 
 }
 
@@ -145,7 +144,7 @@ void switchSendAll(switchState * sstate, int src, packetBuffer * recv)
    //Head of link container
    switchLinks * ptr = sstate->sLinks;
    while(ptr != NULL) {
-      if(ptr->linkin.uniPipeInfo.physIdSrc != src) {
+      if(ptr->linkin.linkID != src) {
          linkSend(&(ptr->linkout), recv);
       }
       ptr = ptr->next;
@@ -157,22 +156,22 @@ void switchSendPacketBuff(switchState * sstate)
 {
    //Send data from top of queue
    //Packet from top of queue
-   int destaddr, sourceaddr;
+   int destaddr, sourcelink;
    packetBuffer * temp = front(sstate->recvPQ);
    destaddr = temp->dstaddr;
-   sourceaddr = temp->srcaddr;
-
+   sourcelink = linksourcefront(sstate->recvPQ);
+   
    //Forwarding Table Entry not found
    int dest_link = linkDestSearch(&(sstate->ftable), destaddr);
    if(dest_link == NOT_FOUND) {
-      switchSendAll(sstate, sourceaddr, temp);
+      switchSendAll(sstate, sourcelink, temp);
    } else {
       //Entry exists
       LinkInfo * out = outputLink(&(sstate->sLinks), dest_link);
       linkSend(out, temp);
       deQueue(sstate->recvPQ); //Pop top after sending
    }
-   debugtable(&(sstate->ftable));
+  //debugtable(&(sstate->ftable));
 }
 
 void scanAllLinks(switchState * sstate, packetBuffer * pb)
@@ -182,6 +181,7 @@ void scanAllLinks(switchState * sstate, packetBuffer * pb)
       int data = 0;
       data = linkReceive(&(ptr->linkin), pb);
       if(data != -1) {
+    //     debug3(ptr->linkin.linkID, sstate->physid);
          switchRecvPacketBuff(sstate, ptr->linkin.linkID, pb);
       }
       //Check something is being sent through link
@@ -204,7 +204,7 @@ void switchMain(switchState * sstate)
       if(!isEmpty(sstate->recvPQ)) {
          switchSendPacketBuff(sstate);
       }
-      usleep(10000);
+   //   usleep(100000);
    }
 }
 
