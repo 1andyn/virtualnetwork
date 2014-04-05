@@ -97,7 +97,7 @@ for(physid = top.numhosts; physid < sw_end_addr; physid++){
    } else if (pid == 0) {
       switchInitState(&sstate, physid);
       sstate.sLinks = getswitchLinks(&linkArray, physid, sstate.sLinks);
-      TestIterate(&sstate, &sstate.sLinks);
+//      TestIterate(&sstate, &sstate.sLinks);
       netCloseHostOtherLinks(&linkArray, physid);
       switchMain(&sstate);
    }
