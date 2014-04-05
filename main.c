@@ -13,9 +13,9 @@
 #include "link.h"
 #include "man.h"
 #include "host.h"
-#include "switch.h"
 #include "net.h"
 #include "switchlink.h"
+#include "switch.h"
 
 #define EMPTY_ADDR  0xffff  /* Indicates that the empty address */
                              /* It also indicates that the broadcast address */
@@ -49,7 +49,6 @@ manLinkArray.numlinks = top.numhosts;
 netCreateConnections(& manLinkArray);
 
 /* Create links between nodes but not setting their end nodes */
-printf("%d \n", top.numlinks);
 linkArray.numlinks = top.numlinks;
 netCreateLinks(& linkArray);
 
@@ -98,7 +97,7 @@ for(physid = top.numhosts; physid < sw_end_addr; physid++){
    } else if (pid == 0) {
       switchInitState(&sstate, physid);
       sstate.sLinks = getswitchLinks(&linkArray, physid, sstate.sLinks);
-      TestIterate(&sstate.sLinks);
+      TestIterate(&sstate, &sstate.sLinks);
       netCloseHostOtherLinks(&linkArray, physid);
       switchMain(&sstate);
    }

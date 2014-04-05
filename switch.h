@@ -20,3 +20,4 @@ void switchInitState(switchState * sstate, int phys);
 
 //Main run function
 void switchMain(switchState * sstate);
+void TestIterate(switchState *sstate, switchLinks ** head);

@@ -21,13 +21,29 @@ switchLinks * constructLink(LinkInfo in, LinkInfo out)
 switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head)
 {
    
-   int i,y;
+   int i,j;
+   for(i = 0; i < linkArray->numlinks; i++) {
+      if(linkArray->link[i].uniPipeInfo.physIdDst == switchID) {
+         LinkInfo in = linkArray->link[i];
+         int source = linkArray->link[i].uniPipeInfo.physIdSrc;
+         for(j = 0; j < linkArray->numlinks; j++) {
+            if(linkArray->link[j].uniPipeInfo.physIdSrc == switchID &&
+               linkArray->link[j].uniPipeInfo.physIdDst == source) {
+                LinkInfo out = linkArray->link[j];
+               if(head == NULL) {
+                  head = constructLink(in, out);
+                  break;
+               } else {
+                  switchLinks * newlink = constructLink(in, out);
+                  addLink(&head, newlink);
+               }
+            }
+         }
+      }
+   }
+
+   /*
    for(i = 0; i < linkArray->numlinks; i++){
-
-      FILE * data = fopen("slinks", "a");
-      fprintf(data, "Data: %d\n", i);
-      fclose(data);
-
       if(linkArray->link[i].uniPipeInfo.physIdSrc == switchID) {
          LinkInfo out = linkArray->link[i];
          int corr_dest = linkArray->link[i].uniPipeInfo.physIdDst;
@@ -36,9 +52,11 @@ switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLink
                LinkInfo in = linkArray->link[y];
                if(head == NULL) {
                   head = constructLink(in, out);
+                  break;
                } else {
                   switchLinks * newlink = constructLink(in, out);
                   addLink(&head, newlink);
+                  break;
                }
 
             }
@@ -46,7 +64,7 @@ switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLink
          }
 
       }
-   }
+   }*/
    return head;
 }
 
@@ -103,28 +121,6 @@ LinkInfo * outputLink(switchLinks ** head, int out_id)
       } else {
          return outputLink(&(index->next), out_id);
       }
-   }
-}
-
-void TestIterate(switchLinks ** head)
-{
-   
-   switchLinks * ptr = *head;
-   if(ptr == NULL) {
-      FILE * data = fopen("bugger", "a");
-      fprintf(data, "Something went wrong");
-      fclose(data);
-   
-   }
-   while(ptr != NULL) {
-      FILE * data = fopen("tester", "a");
-      fprintf(data, "Link ID %d \n", (ptr)->linkout.linkID);
-      fprintf(data, "LinkOut src: %d, LinkOut dest: %d \n", (ptr)->linkout.uniPipeInfo.physIdSrc, (ptr)->linkout.uniPipeInfo.physIdDst);
-      fprintf(data, "LinkIn ID: %d,\n", (ptr)->linkin.linkID);
-      fprintf(data, "LinkIn src: %d, LinkIn dest: %d \n", (ptr)->linkin.uniPipeInfo.physIdSrc, (ptr)->linkin.uniPipeInfo.physIdDst);
-      fprintf(data, "\n");
-      fclose(data);
-      ptr = (ptr)->next;
    }
 }
 

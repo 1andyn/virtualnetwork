@@ -81,6 +81,32 @@ void debug2(int stage)
    }
 }
 
+void TestIterate(switchState * sstate, switchLinks ** head)
+{
+
+   FILE * data = fopen("tester", "a");
+   fprintf(data, "SwitchID: %d \n",sstate->physid);
+   fclose(data);
+   
+   switchLinks * ptr = *head;
+   if(ptr == NULL) {
+      FILE * data = fopen("bugger", "a");
+      fprintf(data, "Something went wrong");
+      fclose(data);
+   
+   }
+   while(ptr != NULL) {
+      data = fopen("tester", "a");
+      fprintf(data, "Link ID %d \n", (ptr)->linkout.linkID);
+      fprintf(data, "LinkOut src: %d, LinkOut dest: %d \n", (ptr)->linkout.uniPipeInfo.physIdSrc, (ptr)->linkout.uniPipeInfo.physIdDst);
+      fprintf(data, "LinkIn ID: %d,\n", (ptr)->linkin.linkID);
+      fprintf(data, "LinkIn src: %d, LinkIn dest: %d \n", (ptr)->linkin.uniPipeInfo.physIdSrc, (ptr)->linkin.uniPipeInfo.physIdDst);
+      fprintf(data, "\n");
+      fclose(data);
+      ptr = (ptr)->next;
+   }
+}
+
 void switchInitState(switchState * sstate, int phys)
 {
    sstate->physid = phys;
@@ -178,6 +204,7 @@ void switchMain(switchState * sstate)
       if(!isEmpty(sstate->recvPQ)) {
          switchSendPacketBuff(sstate);
       }
+      usleep(10000);
    }
 }
 

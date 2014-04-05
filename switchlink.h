@@ -14,5 +14,4 @@ LinkInfo * outputLink(switchLinks ** head, int out_id);
 void addLink(switchLinks ** head, switchLinks * newlink);
 
 void InlinkIterate(switchLinks ** head);
-void TestIterate(switchLinks ** head);
 switchLinks * getswitchLinks(linkArrayType * linkArray, int switchID, switchLinks * head);
