@@ -12,6 +12,7 @@ FWTable * createTable(int dest, int link, int val)
    entry->dest_addr = dest;
    entry->out_link = link;
    entry->valid = val;
+   entry->next = NULL;
    return entry;
 }
 
@@ -87,7 +88,7 @@ void debugtable(FWTable ** head)
    if(!write){
       printf("something wrong happened \n");
    } else {
-      fprintf(write,"----------\n");
+      fprintf(write, "TABLE: ");
       while(iterate != NULL){
          fprintf(write,"Addr: %d Link:%d Valid:%d \n", (iterate)->dest_addr,
          (iterate)->out_link, (iterate)->valid);
